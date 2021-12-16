@@ -56,6 +56,7 @@ if [ "$(uname)" = "Darwin" ]; then
                 unset FOAM_USER_LIBBIN
                 unset FOAM_UTILITIES
 	    fi
+	    cd $CONDA_PREFIX
 	    hdiutil detach $LOCALMOUNTPOINT
 	    rm -rf $CONDA_PREFIX/src/volume
 	fi
