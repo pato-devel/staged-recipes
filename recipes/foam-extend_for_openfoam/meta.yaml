@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/jmeurisse/foam-extend_for_openfoam_conda/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 38f5b0e44d2d83532681e17251fe2bdff49f8d977aa1feecea94805bad5bfa83
+  sha256: 28748254a156c1e16b1ee35328965fdcc95b14cc3e001a91b946beec0a42046b
   
 build:
   number: 0
@@ -23,14 +23,20 @@ requirements:
     - openmpi
     - coreutils
     - mercurial
-    - rpm-tools
     - patchelf  # [linux]
     - flex  # [linux]
     - zlib  # [linux]
     - openssh  # [linux]
     - m4  # [linux]
     - perl  # [linux]
-
+    - boost ==1.72
+    - cgal ==5.0.1
+    - metis
+    - scotch
+    - ptscotch
+    - qt
+    - rpm-tools
+    
   host:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
