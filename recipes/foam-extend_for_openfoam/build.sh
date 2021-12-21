@@ -67,7 +67,9 @@ if [ "$(uname)" = "Linux" ]; then
     alias wmRefresh=""
 fi
 set +e
+cp prefs.sh-build prefs.sh # using PREFIX
 source bashrc
+cp prefs.sh-run prefs.sh # using CONDA_PREFIX
 set -e
 cd $PREFIX/src/volume/foam-extend-4.1_for_openfoam-7
 ./Allwmake -j
