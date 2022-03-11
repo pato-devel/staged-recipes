@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 echo activate foam-extend
 if [ "$(uname)" = "Darwin" ]; then
-    if [ ! -d $CONDA_PREFIX/src/volume ]; then
-	mkdir -p $CONDA_PREFIX/src/volume
+    if [ ! -d $CONDA_PREFIX/src/volume_foam-extend_for_openfoam ]; then
+	mkdir -p $CONDA_PREFIX/src/volume_foam-extend_for_openfoam
     fi
-    hdiutil attach -mountpoint $CONDA_PREFIX/src/volume $CONDA_PREFIX/src/foam-extend_for_openfoam_conda.sparsebundle
+    hdiutil attach -mountpoint $CONDA_PREFIX/src/volume_foam-extend_for_openfoam $CONDA_PREFIX/src/foam-extend_for_openfoam_conda.sparsebundle
 fi
 if [ "$(uname)" = "Linux" ]; then
-    if [ ! -d $CONDA_PREFIX/src/volume ]; then
-	tar xvf $CONDA_PREFIX/src/volume.tar -C $CONDA_PREFIX/src > /dev/null
+    if [ ! -d $CONDA_PREFIX/src/volume_foam-extend_for_openfoam ]; then
+	tar xvf $CONDA_PREFIX/src/volume_foam-extend_for_openfoam.tar -C $CONDA_PREFIX/src > /dev/null
     fi
     dir_gcc=$(dirname `which x86_64-conda-linux-gnu-gcc`)
     cd $dir_gcc
@@ -22,10 +22,10 @@ if [ "$(uname)" = "Linux" ]; then
 	fi
     done
 fi
-if [ -f $CONDA_PREFIX/src/volume/foam-extend-4.1_for_openfoam_7/etc/bashrc ]; then
+if [ -f $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam_7/etc/bashrc ]; then
     if [ "$(uname)" = "Linux" ]; then
 	alias wmRefresh=""
     fi
     set +e
-    source $CONDA_PREFIX/src/volume/foam-extend-4.1_for_openfoam_7/etc/bashrc > /dev/null 2>&1 
+    source $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam_7/etc/bashrc > /dev/null 2>&1 
 fi

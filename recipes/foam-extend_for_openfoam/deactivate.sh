@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 echo deactivate foam-extend
 if [ "$(uname)" = "Darwin" ]; then
-    LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume"
+    LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_foam-extend_for_openfoam"
     if [ -d $LOCALMOUNTPOINT ]; then
 	if mount | grep "on $LOCALMOUNTPOINT" > /dev/null; then
-	    if [ -f $CONDA_PREFIX/src/volume/foam-extend-4.1_for_openfoam_7/etc/bashrc ] && [ ! -z "${WM_PROJECT_DIR}" ]; then
+	    if [ -f $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam_7/etc/bashrc ] && [ ! -z "${WM_PROJECT_DIR}" ]; then
                 unset WM_ARCH
                 unset WM_ARCH_OPTION
                 unset WM_CC
@@ -58,13 +58,12 @@ if [ "$(uname)" = "Darwin" ]; then
 	    fi
 	    cd $CONDA_PREFIX
 	    hdiutil detach $LOCALMOUNTPOINT
-	    rm -rf $CONDA_PREFIX/src/volume
 	fi
     fi
 fi
 
 if [ "$(uname)" = "Linux" ]; then
-    if [ -f $CONDA_PREFIX/src/volume/foam-extend-4.1_for_openfoam_7/etc/bashrc ] && [ ! -z "${WM_PROJECT_DIR}" ]; then
+    if [ -f $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam_7/etc/bashrc ] && [ ! -z "${WM_PROJECT_DIR}" ]; then
         unset WM_ARCH
         unset WM_ARCH_OPTION
         unset WM_CC

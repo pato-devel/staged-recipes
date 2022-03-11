@@ -12,30 +12,30 @@ do
     cp "${RECIPE_DIR}/${CHANGE}.sh" "${PREFIX}/etc/conda/${CHANGE}.d/${PKG_NAME}_${CHANGE}.sh"
 done
 
-# create volume folder
-if [ ! -d $PREFIX/src/volume ]; then
-    mkdir -p $PREFIX/src/volume
+# create volume_foam-extend_for_openfoam folder
+if [ ! -d $PREFIX/src/volume_foam-extend_for_openfoam ]; then
+    mkdir -p $PREFIX/src/volume_foam-extend_for_openfoam
 fi
 cd $PREFIX/src
     
 if [ "$(uname)" = "Linux" ]; then
-    # move src to volume
-    mv $SRC_DIR/src/* $PREFIX/src/volume/
+    # move src to volume_foam-extend_for_openfoam
+    mv $SRC_DIR/src/* $PREFIX/src/volume_foam-extend_for_openfoam/
     rm -rf $SRC_DIR/src
 fi
 
 if [ "$(uname)" = "Darwin" ]; then
-    # create volume
+    # create volume_foam-extend_for_openfoam
     hdiutil create -size 16g -type SPARSEBUNDLE -fs HFSX -volname foam-extend_for_openfoam_conda -fsargs -s foam-extend_for_openfoam_conda.sparsebundle
-    # attach volume
-    hdiutil attach -mountpoint volume foam-extend_for_openfoam_conda.sparsebundle
-    # move src to volume
-    mv $SRC_DIR/src/* $PREFIX/src/volume/
+    # attach volume_foam-extend_for_openfoam
+    hdiutil attach -mountpoint volume_foam-extend_for_openfoam foam-extend_for_openfoam_conda.sparsebundle
+    # move src to volume_foam-extend_for_openfoam
+    mv $SRC_DIR/src/* $PREFIX/src/volume_foam-extend_for_openfoam/
     rm -rf $SRC_DIR/src
 fi
 
 # compile ParMGridGen
-cd $PREFIX/src/volume/parmgridgen
+cd $PREFIX/src/volume_foam-extend_for_openfoam/parmgridgen
 tar xvf ParMGridGen-0.0.2.tar.gz
 cd ParMGridGen-0.0.2
 if [ "$(uname)" = "Linux" ]; then
@@ -48,7 +48,7 @@ if [ "$(uname)" = "Linux" ]; then
         new_name=${x#"./x86_64-conda-linux-gnu-"}
         ln -s $old_name $new_name
     done
-    cd $PREFIX/src/volume/parmgridgen/ParMGridGen-0.0.2
+    cd $PREFIX/src/volume_foam-extend_for_openfoam/parmgridgen/ParMGridGen-0.0.2
     $sed_cmd -i "s/clang/gcc/g" Makefile.in
     export C_INCLUDE_PATH=$BUILD_PREFIX/include
     export CPLUS_INCLUDE_PATH=$BUILD_PREFIX/include
@@ -58,11 +58,11 @@ cp MGridGen/IMlib/libIMlib.a .
 cp libmgrid.a libMGridGen.a
 
 # get foam-extend src
-cd $PREFIX/src/volume
+cd $PREFIX/src/volume_foam-extend_for_openfoam
 tar xvf foam-extend-4.1_for_openfoam-7.tar
 # compile foam-extend 4.1
 export WM_NCOMPPROCS=`nproc` # parallel build
-cd $PREFIX/src/volume/foam-extend-4.1_for_openfoam-7/etc
+cd $PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/etc
 if [ "$(uname)" = "Linux" ]; then
     alias wmRefresh=""
 fi
@@ -71,19 +71,19 @@ cp prefs.sh-build prefs.sh # using PREFIX
 source bashrc
 cp prefs.sh-run prefs.sh # using CONDA_PREFIX
 set -e
-cd $PREFIX/src/volume/foam-extend-4.1_for_openfoam-7
+cd $PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7
 ./Allwmake -j
 
-# Archive volume
+# Archive volume_foam-extend_for_openfoam
 if [ "$(uname)" = "Linux" ]; then
     cd $PREFIX/src
-    tar czvf volume.tar volume < /dev/null
-    rm -rf volume
+    tar czvf volume_foam-extend_for_openfoam.tar volume_foam-extend_for_openfoam < /dev/null
+    rm -rf volume_foam-extend_for_openfoam
 fi
 
 if [ "$(uname)" = "Darwin" ]; then
     cd $PREFIX/src
-    # detach volume
-    hdiutil detach volume
+    # detach volume_foam-extend_for_openfoam
+    hdiutil detach volume_foam-extend_for_openfoam
 fi
 
