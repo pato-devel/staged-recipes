@@ -22,6 +22,7 @@ if [ "$(uname)" = "Linux" ]; then
     # move src to volume_foam-extend_for_openfoam
     mv $SRC_DIR/src/* $PREFIX/src/volume_foam-extend_for_openfoam/
     rm -rf $SRC_DIR/src
+    export sed_cmd=sed
 fi
 
 if [ "$(uname)" = "Darwin" ]; then
@@ -32,6 +33,7 @@ if [ "$(uname)" = "Darwin" ]; then
     # move src to volume_foam-extend_for_openfoam
     mv $SRC_DIR/src/* $PREFIX/src/volume_foam-extend_for_openfoam/
     rm -rf $SRC_DIR/src
+    export sed_cmd=gsed
 fi
 
 # compile ParMGridGen
