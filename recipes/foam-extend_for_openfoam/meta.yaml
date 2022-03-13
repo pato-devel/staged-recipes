@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/jmeurisse/foam-extend_for_openfoam_conda/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 653ff734cd06f1b14a477a26b27c14b293ae68fb9c83cd0b90995623a6fa10af
+  sha256: 4070a399fe6156c4070874a36b44bf0638e8570bbd487f9448ccff8637e18201
   
 build:
   number: 0
