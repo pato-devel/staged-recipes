@@ -22,7 +22,7 @@ if [ "$(uname)" = "Linux" ]; then
 	fi
     done
 fi
-if [ -f $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam_7/etc/bashrc ]; then
+if [ -f $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/etc/bashrc ]; then
     if [ "$(uname)" = "Linux" ]; then
         alias wmRefresh=""
     fi
