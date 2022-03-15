@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 echo activate foam-extend
 if [ "$(uname)" = "Darwin" ]; then
-    LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_foam-extend_for_openfoam"
     CURRENT_DIR=$PWD
+    LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_foam-extend_for_openfoam"
     if [ -d $LOCALMOUNTPOINT ]; then
-        if mount | grep "on $LOCALMOUNTPOINT" > /dev/null; then
+        if mount | grep "on $LOCALMOUNTPOINT " > /dev/null; then
 	    cd $CONDA_PREFIX
             hdiutil detach $LOCALMOUNTPOINT
 	    cd $CURRENT_DIR
@@ -32,17 +32,7 @@ if [ "$(uname)" = "Linux" ]; then
     done
 fi
 if [ -f $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/etc/bashrc ]; then
-    if [ "$(uname)" = "Linux" ]; then
-        alias wmRefresh=""
-    fi
-    CURRENT_DIR=$PWD
-    cd $CONDA_PREFIX/src/volume_foam-extend_for_openfoam
-    echo "source $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/etc/bashrc > /dev/null 2>&1" > .foam-extend_WM_OPTIONS.sh
-    echo "echo \$WM_OPTIONS" >> .foam-extend_WM_OPTIONS.sh
-    chmod +x .foam-extend_WM_OPTIONS.sh
-    export FOAM_EXTEND_WM_OPTIONS=$(./.foam-extend_WM_OPTIONS.sh)
-    rm -f .foam-extend_WM_OPTIONS.sh
-    cd $CURRENT_DIR
+    export FOAM_EXTEND_WM_OPTIONS=`ls $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/lib`
     export FOAM_EXTEND_SRC=$CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/src
     export FOAM_EXTEND_LIB=$CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/lib/$FOAM_EXTEND_WM_OPTIONS
     unset FOAM_EXTEND_WM_OPTIONS
