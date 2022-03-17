@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo activate foam-extend
+echo activate foam-extend_for_openfoam
 if [ "$(uname)" = "Darwin" ]; then
     CURRENT_DIR=$PWD
     LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_foam-extend_for_openfoam"

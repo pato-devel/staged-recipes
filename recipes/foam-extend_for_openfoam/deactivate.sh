@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo deactivate foam-extend
+echo deactivate foam-extend_for_openfoam
 if [ "$(uname)" = "Darwin" ]; then
     LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_foam-extend_for_openfoam"
     if [ -d $LOCALMOUNTPOINT ]; then
