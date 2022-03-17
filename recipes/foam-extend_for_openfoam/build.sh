@@ -80,7 +80,7 @@ cd $PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7
 # Archive volume_foam-extend_for_openfoam
 if [ "$(uname)" = "Linux" ]; then
     cd $PREFIX/src
-    tar czvf volume_foam-extend_for_openfoam.tar volume_foam-extend_for_openfoam < /dev/null
+    tar czvf volume_foam-extend_for_openfoam.tar volume_foam-extend_for_openfoam > /dev/null
     rm -rf volume_foam-extend_for_openfoam
 fi
 
