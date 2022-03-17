@@ -17,7 +17,10 @@ if [ "$(uname)" = "Darwin" ]; then
 fi
 if [ "$(uname)" = "Linux" ]; then
     if [ ! -d $CONDA_PREFIX/src/volume_foam-extend_for_openfoam ]; then
-	tar xvf $CONDA_PREFIX/src/volume_foam-extend_for_openfoam.tar -C $CONDA_PREFIX/src > /dev/null
+	CURRENT_DIR=$PWD
+	cd $CONDA_PREFIX/src
+	unzip volume_foam-extend_for_openfoam.zip > /dev/null
+	cd $CURRENT_DIR
     fi
     dir_gcc=$(dirname `which x86_64-conda-linux-gnu-gcc`)
     cd $dir_gcc
