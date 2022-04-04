@@ -2,11 +2,9 @@
 set -e  # exit when any command fails
 set -x # show the commands
 
-echo -e "\n### TESTING PATO ###\n"
+echo -e "\n### TESTING OpenFOAM ###\n"
 cd $PREFIX
-# run tests
-which runtests
-runtests
+if [ ! -f $CONDA_PREFIX/
 
 if [ "$(uname)" = "Darwin" ]; then
     cd $PREFIX/src
