@@ -79,9 +79,32 @@ cd $PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7
 
 # Archive volume_foam-extend_for_openfoam
 if [ "$(uname)" = "Linux" ]; then
-    cd $PREFIX/src
-    zip -r volume_foam-extend_for_openfoam.zip volume_foam-extend_for_openfoam > /dev/null
-    rm -rf volume_foam-extend_for_openfoam
+    cd $PREFIX/src/volume_foam-extend_for_openfoam
+    rm -f foam-extend-4.1_for_openfoam-7.tar
+    rm -f parmgridgen/ParMGridGen-0.0.2.tar.gz
+    zip -r parmgridgen.zip parmgridgen
+    rm -rf parmgridgen
+    for dir in $PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/*/
+    do
+	dir=${dir%*/}
+	dir="${dir##*/}"
+	if [ $dir != "src" ]; then
+	    cd $PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7
+	    zip -r $dir.zip $dir
+	    rm -rf $dir
+	    cd $PREFIX/src/volume_foam-extend_for_openfoam
+	fi
+    done
+    for dir in $PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/src/*/
+    do
+        dir=${dir%*/}
+        dir="${dir##*/}"
+        cd $PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/src
+        zip -r $dir.zip $dir
+        rm -rf $dir
+        cd $PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7
+    done
+    cd $PREFIX/src/volume_foam-extend_for_openfoam
 fi
 
 if [ "$(uname)" = "Darwin" ]; then

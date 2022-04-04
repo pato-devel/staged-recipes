@@ -16,12 +16,23 @@ if [ "$(uname)" = "Darwin" ]; then
     hdiutil attach -mountpoint $CONDA_PREFIX/src/volume_foam-extend_for_openfoam $CONDA_PREFIX/src/foam-extend_for_openfoam_conda.sparsebundle
 fi
 if [ "$(uname)" = "Linux" ]; then
-    if [ ! -d $CONDA_PREFIX/src/volume_foam-extend_for_openfoam ]; then
-	CURRENT_DIR=$PWD
-	cd $CONDA_PREFIX/src
-	unzip volume_foam-extend_for_openfoam.zip > /dev/null
-	cd $CURRENT_DIR
+    CURRENT_DIR=$PWD
+    cd $CONDA_PREFIX/src/volume_foam-extend_for_openfoam
+    zip_files=`find . -path '*/*.zip' -type f`
+    if [[ $zip_files ]]; then
+	for file in $zip_files
+	do
+	    dir=$(dirname $file) # directory
+	    dir=${dir#"./"} # remove ./
+	    filename=$(basename $file)
+	    curr_dir=$PWD
+	    cd $dir
+	    unzip $filename
+	    rm -f $filename
+	    cd $curr_dir
+	done
     fi
+    cd $CURRENT_DIR
     dir_gcc=$(dirname `which x86_64-conda-linux-gnu-gcc`)
     cd $dir_gcc
     files=`find . -name "x86_64-conda-linux-gnu-*" -type f`
