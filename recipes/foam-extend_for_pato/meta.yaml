@@ -1,13 +1,13 @@
-{% set name = "foam-extend_for_openfoam" %}
-{% set version = "4.1_7" %}
+{% set name = "foam-extend_for_pato" %}
+{% set version = "4.1_2.3.1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/jmeurisse/foam-extend_for_openfoam_conda/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 4070a399fe6156c4070874a36b44bf0638e8570bbd487f9448ccff8637e18201
+  url: https://github.com/jmeurisse/foam-extend_for_pato_conda/archive/refs/tags/{{ version }}.tar.gz
+  sha256: b9d725b93798442a793ac02652eda49db9b3eca32757df035d9c96d0037c1638
   
 build:
   number: 0
@@ -58,7 +58,6 @@ requirements:
     - ptscotch
     - qt
     - rpm-tools
-    # - python == 3.9
 
   run:
     - {{ compiler('c') }}
@@ -80,7 +79,6 @@ requirements:
     - scotch
     - ptscotch
     - rpm-tools
-    # - python == 3.9
  
 extra:
   recipe-maintainers:
