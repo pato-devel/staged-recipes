@@ -13,19 +13,21 @@ do
 done
 
 # Create soft links for the compilers
-current_dir=$PWD
-dir_gcc=$(dirname `which x86_64-conda-linux-gnu-gcc`)
-cd $dir_gcc
-files=`find . -name "x86_64-conda-linux-gnu-*" -type f`
-for x in $files
-do
-    old_name=${x#"./"}
-    new_name=${x#"./x86_64-conda-linux-gnu-"}
-    if [ ! -f $new_name ]; then
-        ln -s $old_name $new_name
-    fi
-done
-cd $current_dir
+if [ "$(uname)" = "Linux" ]; then
+    current_dir=$PWD
+    dir_gcc=$(dirname `which x86_64-conda-linux-gnu-gcc`)
+    cd $dir_gcc
+    files=`find . -name "x86_64-conda-linux-gnu-*" -type f`
+    for x in $files
+    do
+	old_name=${x#"./"}
+	new_name=${x#"./x86_64-conda-linux-gnu-"}
+	if [ ! -f $new_name ]; then
+            ln -s $old_name $new_name
+	fi
+    done
+    cd $current_dir
+fi
 
 # create volume_foam-extend_for_openfoam folder
 if [ ! -d $PREFIX/src/volume_foam-extend_for_openfoam ]; then
