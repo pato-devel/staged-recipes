@@ -68,15 +68,6 @@ cd $PREFIX/src/volume/parmgridgen
 tar xvf ParMGridGen-0.0.2.tar.gz
 cd ParMGridGen-0.0.2
 if [ "$(uname)" = "Linux" ]; then
-    dir_gcc=$(dirname `which x86_64-conda-linux-gnu-gcc`)
-    cd $dir_gcc
-    files=`find . -name "x86_64-conda-linux-gnu-*" -type f`
-    for x in $files
-    do
-	old_name=${x#"./"}
-	new_name=${x#"./x86_64-conda-linux-gnu-"}
-	ln -s $old_name $new_name
-    done
     cd $PREFIX/src/volume/parmgridgen/ParMGridGen-0.0.2
     $sed_cmd -i "s/clang/gcc/g" Makefile.in
     $sed_cmd -i "s/COPTIONS =/COPTIONS = -fPIC/g" Makefile.in
