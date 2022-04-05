@@ -17,14 +17,17 @@ requirements:
   build:
     - openfoam_for_pato
     - foam-extend_for_pato
-    
+    - tar
+
   host:
     - openfoam_for_pato
-    - foam-extend_for_pato  
+    - foam-extend_for_pato
+    - tar
 
   run:
     - openfoam_for_pato
     - foam-extend_for_pato
+    - tar
     
 about:
   home: https://pato.ac
