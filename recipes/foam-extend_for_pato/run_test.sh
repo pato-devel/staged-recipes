@@ -9,8 +9,8 @@ if [ "$(uname)" = "Darwin" ]; then
         exit 1 # error
     fi
     cd $PREFIX/src
-    # detach volume
-    hdiutil detach volume
+    # detach volume_foam-extend_for_openfoam
+    hdiutil detach volume_foam-extend_for_openfoam
 else
     if [ ! -f $PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/lib/linux64GccDPInt32Opt/lib_extend_foam.so ]; then
         exit 1 # error
