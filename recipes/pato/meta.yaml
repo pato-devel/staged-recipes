@@ -6,8 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/jmeurisse/pato_releases_conda/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: c8addd44caea04bf26e7603f6848884498b2ac997e4ea52dc459960cb7a08bd1
+  url: https://github.com/jmeurisse/pato_conda/archive/refs/tags/{{ version }}.tar.gz
+  sha256: ca5981ed42f7df92e05aab33bffc246379034cf84cfb81f858e56c4d2359e380
   
 build:
   number: 0
@@ -15,73 +15,22 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - make
-    - wget
-    - cmake 
-    - openmpi
-    - coreutils
-    - patchelf  # [linux]
-    - flex  # [linux]
-    - zlib  # [linux]
-    - openssh  # [linux]
-    - m4  # [linux]
-    - perl  # [linux]
-    - readline  # [linux]
-
+    - openfoam_for_pato
+    - foam-extend_for_pato
+    
   host:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - make  # [linux]
-    - wget  # [linux]
-    - cmake
-    - openmpi
-    - coreutils
-    - patchelf  # [linux]
-    - flex  # [linux]
-    - zlib  # [linux]
-    - openssh  # [linux]
-    - m4  # [linux]
-    - perl  # [linux]
-    - boost ==1.72
-    - cgal ==5.0.1
-    - metis
-    - scotch
-    - ptscotch
-    - qt
-    - python
-    - readline	# [linux]
+    - openfoam_for_pato
+    - foam-extend_for_pato  
 
   run:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - make  # [linux]
-    - wget  # [linux]
-    - cmake
-    - openmpi
-    - coreutils
-    - patchelf  # [linux]
-    - flex  # [linux]
-    - zlib  # [linux]
-    - openssh  # [linux]
-    - m4  # [linux]
-    - perl  # [linux]
-    - boost ==1.72
-    - cgal ==5.0.1
-    - metis
-    - scotch
-    - ptscotch
-    - python
-    - matplotlib-base
-    - readline	# [linux]
-
+    - openfoam_for_pato
+    - foam-extend_for_pato
+    
 about:
   home: https://pato.ac
   license: NASA-1.3
   license_file: 
     - licenses/pato_LICENSE.txt
-    - licenses/openfoam_LICENSE.txt
   summary: 'A package to perform the analysis of multiphase porous reactive materials'
   description: |
     The Porous material Analysis Toolbox (PATO) is a modular analysis platform for multiphase porous 
