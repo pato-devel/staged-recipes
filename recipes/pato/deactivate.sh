@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
-echo deactivate OpenFOAM and PATO
+echo deactivate PATO
 if [ "$(uname)" = "Darwin" ]; then
-    LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume"
+    LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_pato"
     if [ -d $LOCALMOUNTPOINT ]; then
 	if mount | grep "on $LOCALMOUNTPOINT " > /dev/null; then
-	    if [ -f $CONDA_PREFIX/src/volume/OpenFOAM/OpenFOAM-7/etc/config.sh/unset ] && [ ! -z "${WM_PROJECT_DIR}" ]; then
-		source $CONDA_PREFIX/src/volume/OpenFOAM/OpenFOAM-7/etc/config.sh/unset
-	    fi
-	    if [ -f $CONDA_PREFIX/src/volume/PATO/PATO-dev_2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
+	    if [ -f $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev_2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
 		unset PATO_DIR
 		unset LIB_PATO
 		unset PATO_UNIT_TESTING
@@ -32,10 +29,7 @@ if [ "$(uname)" = "Darwin" ]; then
 fi
 
 if [ "$(uname)" = "Linux" ]; then
-    if [ -f $CONDA_PREFIX/src/volume/OpenFOAM/OpenFOAM-7/etc/config.sh/unset ] && [ ! -z "${WM_PROJECT_DIR}" ]; then
-	source $CONDA_PREFIX/src/volume/OpenFOAM/OpenFOAM-7/etc/config.sh/unset
-    fi
-    if [ -f $CONDA_PREFIX/src/volume/PATO/PATO-dev_2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
+    if [ -f $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev_2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
 	unset PATO_DIR
 	unset LIB_PATO
 	unset PATO_UNIT_TESTING
