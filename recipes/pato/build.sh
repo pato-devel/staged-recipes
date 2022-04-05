@@ -37,7 +37,7 @@ cd $PREFIX/src
     
 if [ "$(uname)" = "Linux" ]; then
     # move src to volume_pato
-    mv $SRC_DIR/src/Linux/* $PREFIX/src/volume_pato/
+    #mv $SRC_DIR/src/Linux/* $PREFIX/src/volume_pato/
     mv $SRC_DIR/src/Both/* $PREFIX/src/volume_pato/
     rm -rf $SRC_DIR/src
     sed_cmd=sed
