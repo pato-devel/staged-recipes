@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
 echo activate foam-extend_for_openfoam
 if [ "$(uname)" = "Darwin" ]; then
-    if [ ! -d $CONDA_PREFIX/src/volume_foam-extend_for_openfoam ]; then
-	mkdir -p $CONDA_PREFIX/src/volume_foam-extend_for_openfoam
+    if [ ! -d $CONDA_PREFIX/src/volume_foam-extend_for_pato ]; then
+	mkdir -p $CONDA_PREFIX/src/volume_foam-extend_for_pato
     fi
     for i in "$PREFIX" "$BUILD_PREFIX"
     do
-        if mount | grep "on $i/src/volume_foam-extend_for_openfoam " > /dev/null; then
+        if mount | grep "on $i/src/volume_foam-extend_for_pato " > /dev/null; then
             curr_dit=$PWD
             cd $i/src
-            hdiutil detach volume_foam-extend_for_openfoam
+            hdiutil detach volume_foam-extend_for_pato
             cd $curr_dir
         fi
     done
-    LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_foam-extend_for_openfoam"
+    LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_foam-extend_for_pato"
     if ! mount | grep "on $LOCALMOUNTPOINT " > /dev/null; then
-	hdiutil attach -mountpoint $CONDA_PREFIX/src/volume_foam-extend_for_openfoam $CONDA_PREFIX/src/foam-extend_for_openfoam_conda.sparsebundle
+	hdiutil attach -mountpoint $CONDA_PREFIX/src/volume_foam-extend_for_pato $CONDA_PREFIX/src/foam-extend_for_openfoam_conda.sparsebundle
     fi
 fi
 if [ "$(uname)" = "Linux" ]; then
     CURRENT_DIR=$PWD
-    cd $CONDA_PREFIX/src/volume_foam-extend_for_openfoam
+    cd $CONDA_PREFIX/src/volume_foam-extend_for_pato
     zip_files=`find . -path '*/*.zip' -type f`
     if [[ $zip_files ]]; then
 	for file in $zip_files
@@ -48,9 +48,9 @@ if [ "$(uname)" = "Linux" ]; then
 	fi
     done
 fi
-if [ -f $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/etc/bashrc ]; then
-    export FOAM_EXTEND_WM_OPTIONS=`ls $CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/lib`
-    export FOAM_EXTEND_SRC=$CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/src
-    export FOAM_EXTEND_LIB=$CONDA_PREFIX/src/volume_foam-extend_for_openfoam/foam-extend-4.1_for_openfoam-7/lib/$FOAM_EXTEND_WM_OPTIONS
+if [ -f $CONDA_PREFIX/src/volume_foam-extend_for_pato/foam-extend-4.1_for_openfoam-7/etc/bashrc ]; then
+    export FOAM_EXTEND_WM_OPTIONS=`ls $CONDA_PREFIX/src/volume_foam-extend_for_pato/foam-extend-4.1_for_openfoam-7/lib`
+    export FOAM_EXTEND_SRC=$CONDA_PREFIX/src/volume_foam-extend_for_pato/foam-extend-4.1_for_openfoam-7/src
+    export FOAM_EXTEND_LIB=$CONDA_PREFIX/src/volume_foam-extend_for_pato/foam-extend-4.1_for_openfoam-7/lib/$FOAM_EXTEND_WM_OPTIONS
     unset FOAM_EXTEND_WM_OPTIONS
 fi
