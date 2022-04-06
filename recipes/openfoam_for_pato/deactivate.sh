@@ -34,23 +34,11 @@ fi
 if [ "$(uname)" = "Linux" ]; then
     if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/config.sh/unset ] && [ ! -z "${WM_PROJECT_DIR}" ]; then
 	source $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/config.sh/unset
-    fi
-    if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/PATO/PATO-dev_2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
-	unset PATO_DIR
-	unset LIB_PATO
-	unset PATO_UNIT_TESTING
-	unset PATO_TUTORIALS
-	unset MPP_DIRECTORY
-	unset MPP_DATA_DIRECTORY
-	unalias pato 2>/dev/null
-	unalias solo 2>/dev/null
-	unalias utio 2>/dev/null
-	unalias libo 2>/dev/null
-	unalias tuto 2>/dev/null
-	unalias 1D 2>/dev/null
-	unalias 1 2>/dev/null
-	unalias 2D 2>/dev/null
-	unalias 3D 2>/dev/null
-	unalias muto 2>/dev/null
+	#LD_LIBRARY_PATH
+	for old_path in $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64Gcc/gperftools-svn/lib $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib/openmpi-system $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64GccDPInt32/lib/openmpi-system $CONDA_PREFIX/lib $HOME/OpenFOAM/$USER-7/platforms/linux64GccDPInt32Opt/lib $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/site/7/platforms/linux64GccDPInt32Opt/lib $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64GccDPInt32/lib $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib/dummy
+	do
+	    LD_LIBRARY_PATH="${LD_LIBRARY_PATH/${old_path}:/}"
+        done
+	export LD_LIBRARY_PATH
     fi
 fi
