@@ -41,15 +41,3 @@ if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/bashr
     fi
     source $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/bashrc
 fi
-if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/PATO/PATO-dev-2.3.1/bashrc ]; then
-    export PATO_DIR=$CONDA_PREFIX/src/volume_openfoam_for_pato/PATO/PATO-dev-2.3.1
-    source $PATO_DIR/bashrc
-fi
-if [ "$(uname)" = "Darwin" ]; then
-    if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/PATO/PATO-dev-2.3.1/data/Environments/RawData/Earth/environmentComposition ]; then
-	if [ -f $CONDA_PREFIX/src/environmentComposition ]; then
-	    cp $CONDA_PREFIX/src/environmentComposition $CONDA_PREFIX/src/volume_openfoam_for_pato/PATO/PATO-dev-2.3.1/data/Environments/RawData/Earth/environmentComposition
-	    rm -f $CONDA_PREFIX/src/environmentComposition
-	fi
-    fi
-fi
