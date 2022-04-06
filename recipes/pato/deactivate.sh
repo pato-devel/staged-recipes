@@ -46,5 +46,11 @@ if [ "$(uname)" = "Linux" ]; then
 	unalias 2D 2>/dev/null
 	unalias 3D 2>/dev/null
 	unalias muto 2>/dev/null
+	# LD_LIBRARY_PATH
+	for old_path in $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/src/thirdParty/mutation++/install/lib $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/install/lib
+	do
+	    LD_LIBRARY_PATH="${LD_LIBRARY_PATH/${old_path}:/}" # to be improved if last without :
+	done
+	export LD_LIBRARY_PATH
     fi
 fi
