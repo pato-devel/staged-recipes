@@ -1,19 +1,22 @@
 #!/usr/bin/env bash
 echo activate foam-extend_for_openfoam
 if [ "$(uname)" = "Darwin" ]; then
-    CURRENT_DIR=$PWD
-    LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_foam-extend_for_openfoam"
-    if [ -d $LOCALMOUNTPOINT ]; then
-        if mount | grep "on $LOCALMOUNTPOINT " > /dev/null; then
-	    cd $CONDA_PREFIX
-            hdiutil detach $LOCALMOUNTPOINT
-	    cd $CURRENT_DIR
-	fi
-    fi	
     if [ ! -d $CONDA_PREFIX/src/volume_foam-extend_for_openfoam ]; then
 	mkdir -p $CONDA_PREFIX/src/volume_foam-extend_for_openfoam
     fi
-    hdiutil attach -mountpoint $CONDA_PREFIX/src/volume_foam-extend_for_openfoam $CONDA_PREFIX/src/foam-extend_for_openfoam_conda.sparsebundle
+    for i in "$PREFIX" "$BUILD_PREFIX"
+    do
+        if mount | grep "on $i/src/volume_foam-extend_for_openfoam " > /dev/null; then
+            curr_dit=$PWD
+            cd $i/src
+            hdiutil detach volume_foam-extend_for_openfoam
+            cd $curr_dir
+        fi
+    done
+    LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_foam-extend_for_openfoam"
+    if ! mount | grep "on $LOCALMOUNTPOINT " > /dev/null; then
+	hdiutil attach -mountpoint $CONDA_PREFIX/src/volume_foam-extend_for_openfoam $CONDA_PREFIX/src/foam-extend_for_openfoam_conda.sparsebundle
+    fi
 fi
 if [ "$(uname)" = "Linux" ]; then
     CURRENT_DIR=$PWD
