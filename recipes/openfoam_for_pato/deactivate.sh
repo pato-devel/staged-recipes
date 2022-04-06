@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo deactivate OpenFOAM and PATO
+echo deactivate openfoam_for_pato
 if [ "$(uname)" = "Darwin" ]; then
     LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_openfoam_for_pato"
     if [ -d $LOCALMOUNTPOINT ]; then
