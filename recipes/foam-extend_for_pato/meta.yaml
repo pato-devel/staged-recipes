@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/jmeurisse/foam-extend_for_pato_conda/archive/refs/tags/{{ version }}.tar.gz
-  sha256: b9d725b93798442a793ac02652eda49db9b3eca32757df035d9c96d0037c1638
+  sha256: 85099d20e50692e936735989b86019a88bda243906269d18970b193e7a3bd733
   
 build:
   number: 0
