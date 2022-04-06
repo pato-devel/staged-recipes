@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bashAA
 echo deactivate PATO
 if [ "$(uname)" = "Darwin" ]; then
     LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_pato"
@@ -21,6 +21,19 @@ if [ "$(uname)" = "Darwin" ]; then
 		unalias 2D 2>/dev/null
 		unalias 3D 2>/dev/null
 		unalias muto 2>/dev/null
+		# DYLD_LIBRARY_PATH                                                                                                                              
+		for old_path in $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/src/thirdParty/mutation++/install/lib \
+				    $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/install/lib
+		do
+		    if [[ $DYLD_LIBRARY_PATH == *"$old_path:"* ]]; then
+			DYLD_LIBRARY_PATH="${DYLD_LIBRARY_PATH/${old_path}:/}"
+		    else
+			if [[ $DYLD_LIBRARY_PATH == *"$old_path"* ]]; then
+			    DYLD_LIBRARY_PATH="${DYLD_LIBRARY_PATH/${old_path}/}"
+			fi
+		    fi
+		done
+		export DYLD_LIBRARY_PATH
             fi
 	    cd $CONDA_PREFIX
 	    hdiutil detach $LOCALMOUNTPOINT
@@ -47,9 +60,16 @@ if [ "$(uname)" = "Linux" ]; then
 	unalias 3D 2>/dev/null
 	unalias muto 2>/dev/null
 	# LD_LIBRARY_PATH
-	for old_path in $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/src/thirdParty/mutation++/install/lib $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/install/lib
+	for old_path in $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/src/thirdParty/mutation++/install/lib \
+			    $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/install/lib
 	do
-	    LD_LIBRARY_PATH="${LD_LIBRARY_PATH/${old_path}:/}" # to be improved if last without :
+	    if [[ $LD_LIBRARY_PATH == *"$old_path:"* ]]; then
+                LD_LIBRARY_PATH="${LD_LIBRARY_PATH/${old_path}:/}"
+            else
+                if [[ $LD_LIBRARY_PATH == *"$old_path"* ]]; then
+                    LD_LIBRARY_PATH="${LD_LIBRARY_PATH/${old_path}/}"
+                fi
+            fi
 	done
 	export LD_LIBRARY_PATH
     fi
