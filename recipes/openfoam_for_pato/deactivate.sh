@@ -6,25 +6,27 @@ if [ "$(uname)" = "Darwin" ]; then
 	if mount | grep "on $LOCALMOUNTPOINT " > /dev/null; then
 	    if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/config.sh/unset ] && [ ! -z "${WM_PROJECT_DIR}" ]; then
 		source $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/config.sh/unset
+		#DYLD_LIBRARY_PATH
+		for old_path in $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64Gcc/gperftools-svn/lib \
+				    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib/openmpi-system \
+				    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64GccDPInt32/lib/openmpi-system \
+				    $CONDA_PREFIX/lib \
+				    $HOME/OpenFOAM/$USER-7/platforms/linux64GccDPInt32Opt/lib \
+				    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/site/7/platforms/linux64GccDPInt32Opt/lib \
+				    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib \
+				    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64GccDPInt32/lib \
+				    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib/dummy
+		do
+                    if [[ $DYLD_LIBRARY_PATH == *"$old_path:"* ]]; then
+			DYLD_LIBRARY_PATH="${DYLD_LIBRARY_PATH/${old_path}:/}"
+                    else
+			if [[ $DYLD_LIBRARY_PATH == *"$old_path"* ]]; then
+                            DYLD_LIBRARY_PATH="${DYLD_LIBRARY_PATH/${old_path}/}"
+			fi
+                    fi
+		done
+		export DYLD_LIBRARY_PATH
 	    fi
-	    if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/PATO/PATO-dev_2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
-		unset PATO_DIR
-		unset LIB_PATO
-		unset PATO_UNIT_TESTING
-		unset PATO_TUTORIALS
-		unset MPP_DIRECTORY
-		unset MPP_DATA_DIRECTORY
-		unalias pato 2>/dev/null
-		unalias solo 2>/dev/null
-		unalias utio 2>/dev/null
-		unalias libo 2>/dev/null
-		unalias tuto 2>/dev/null
-		unalias 1D 2>/dev/null
-		unalias 1 2>/dev/null
-		unalias 2D 2>/dev/null
-		unalias 3D 2>/dev/null
-		unalias muto 2>/dev/null
-            fi
 	    cd $CONDA_PREFIX
 	    hdiutil detach $LOCALMOUNTPOINT
 	fi
@@ -33,12 +35,26 @@ fi
 
 if [ "$(uname)" = "Linux" ]; then
     if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/config.sh/unset ] && [ ! -z "${WM_PROJECT_DIR}" ]; then
-	source $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/config.sh/unset
-	#LD_LIBRARY_PATH
-	for old_path in $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64Gcc/gperftools-svn/lib $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib/openmpi-system $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64GccDPInt32/lib/openmpi-system $CONDA_PREFIX/lib $HOME/OpenFOAM/$USER-7/platforms/linux64GccDPInt32Opt/lib $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/site/7/platforms/linux64GccDPInt32Opt/lib $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64GccDPInt32/lib $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib/dummy
-	do
-	    LD_LIBRARY_PATH="${LD_LIBRARY_PATH/${old_path}:/}"
+        source $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/config.sh/unset
+        #LD_LIBRARY_PATH
+        for old_path in $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64Gcc/gperftools-svn/lib \
+			    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib/openmpi-system \
+			    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64GccDPInt32/lib/openmpi-system \
+			    $CONDA_PREFIX/lib \
+			    $HOME/OpenFOAM/$USER-7/platforms/linux64GccDPInt32Opt/lib \
+			    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/site/7/platforms/linux64GccDPInt32Opt/lib \
+			    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib \
+			    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/ThirdParty-7/platforms/linux64GccDPInt32/lib \
+			    $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/linux64GccDPInt32Opt/lib/dummy
+        do
+            if [[ $LD_LIBRARY_PATH == *"$old_path:"* ]]; then
+		LD_LIBRARY_PATH="${LD_LIBRARY_PATH/${old_path}:/}"
+            else
+                if [[ $LD_LIBRARY_PATH == *"$old_path"* ]]; then
+                    LD_LIBRARY_PATH="${LD_LIBRARY_PATH/${old_path}/}"
+                fi
+            fi
         done
-	export LD_LIBRARY_PATH
+        export LD_LIBRARY_PATH
     fi
 fi
