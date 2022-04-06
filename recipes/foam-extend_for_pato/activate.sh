@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo activate foam-extend_for_openfoam
+echo activate foam-extend_for_pato
 if [ "$(uname)" = "Darwin" ]; then
     if [ ! -d $CONDA_PREFIX/src/volume_foam-extend_for_pato ]; then
 	mkdir -p $CONDA_PREFIX/src/volume_foam-extend_for_pato
@@ -15,7 +15,7 @@ if [ "$(uname)" = "Darwin" ]; then
     done
     LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_foam-extend_for_pato"
     if ! mount | grep "on $LOCALMOUNTPOINT " > /dev/null; then
-	hdiutil attach -mountpoint $CONDA_PREFIX/src/volume_foam-extend_for_pato $CONDA_PREFIX/src/foam-extend_for_openfoam_conda.sparsebundle
+	hdiutil attach -mountpoint $CONDA_PREFIX/src/volume_foam-extend_for_pato $CONDA_PREFIX/src/foam-extend_for_pato_conda.sparsebundle
     fi
 fi
 if [ "$(uname)" = "Linux" ]; then

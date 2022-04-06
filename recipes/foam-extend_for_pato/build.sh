@@ -44,9 +44,9 @@ fi
 
 if [ "$(uname)" = "Darwin" ]; then
     # create volume_foam-extend_for_pato
-    hdiutil create -size 16g -type SPARSEBUNDLE -fs HFSX -volname foam-extend_for_openfoam_conda -fsargs -s foam-extend_for_openfoam_conda.sparsebundle
+    hdiutil create -size 16g -type SPARSEBUNDLE -fs HFSX -volname foam-extend_for_pato_conda -fsargs -s foam-extend_for_pato_conda.sparsebundle
     # attach volume_foam-extend_for_pato
-    hdiutil attach -mountpoint volume_foam-extend_for_pato foam-extend_for_openfoam_conda.sparsebundle
+    hdiutil attach -mountpoint volume_foam-extend_for_pato foam-extend_for_pato_conda.sparsebundle
     # move src to volume_foam-extend_for_pato
     mv $SRC_DIR/src/* $PREFIX/src/volume_foam-extend_for_pato/
     rm -rf $SRC_DIR/src
