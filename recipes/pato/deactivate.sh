@@ -4,7 +4,7 @@ if [ "$(uname)" = "Darwin" ]; then
     LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_pato"
     if [ -d $LOCALMOUNTPOINT ]; then
 	if mount | grep "on $LOCALMOUNTPOINT " > /dev/null; then
-	    if [ -f $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev_2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
+	    if [ -f $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
 		unset PATO_DIR
 		unset LIB_PATO
 		unset PATO_UNIT_TESTING
@@ -42,7 +42,7 @@ if [ "$(uname)" = "Darwin" ]; then
 fi
 
 if [ "$(uname)" = "Linux" ]; then
-    if [ -f $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev_2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
+    if [ -f $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
 	unset PATO_DIR
 	unset LIB_PATO
 	unset PATO_UNIT_TESTING
