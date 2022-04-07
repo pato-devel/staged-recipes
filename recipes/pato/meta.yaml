@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/jmeurisse/pato_conda/archive/refs/tags/{{ version }}.tar.gz
-  sha256: ca5981ed42f7df92e05aab33bffc246379034cf84cfb81f858e56c4d2359e380
+  sha256: 396c7e2dc8b43da90e88a35763a5cd668eb4ed4bef0e2308b463db1d4e5a3c19
   
 build:
   number: 0
@@ -15,18 +15,18 @@ build:
 
 requirements:
   build:
-    - openfoam_for_pato
-    - foam-extend_for_pato
+    - openfoam_for_pato ==7_2.3.1
+    - foam-extend_for_pato ==4.1_2.3.1
     - tar
 
   host:
-    - openfoam_for_pato
-    - foam-extend_for_pato
+    - openfoam_for_pato	==7_2.3.1
+    - foam-extend_for_pato ==4.1_2.3.1
     - tar
 
   run:
-    - openfoam_for_pato
-    - foam-extend_for_pato
+    - openfoam_for_pato	==7_2.3.1
+    - foam-extend_for_pato ==4.1_2.3.1
     - tar
     
 about:
