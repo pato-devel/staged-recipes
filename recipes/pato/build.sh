@@ -99,7 +99,9 @@ fi
 if [ "$(uname)" = "Darwin" ]; then
     # copy environmentComposition
     cp $PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/data/Environments/RawData/Earth/environmentComposition $PREFIX/src/environmentComposition
-    # detach volume_pato
+    # detach volumes
+    hdiutil detach volume_openfoam_for_pato
+    hdiutil detach volume_foam-extend_for_pato
     hdiutil detach volume_pato
 fi
 
