@@ -1,14 +1,10 @@
 {% set name = "pato" %}
-{% set version = "2.3.1" %}
+{% set version = "dev" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
-source:
-  url: https://github.com/jmeurisse/pato_conda/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 396c7e2dc8b43da90e88a35763a5cd668eb4ed4bef0e2308b463db1d4e5a3c19
-  
 build:
   number: 0
   skip: True  # [win]
@@ -32,8 +28,6 @@ requirements:
 about:
   home: https://pato.ac
   license: NASA-1.3
-  license_file: 
-    - licenses/pato_LICENSE.txt
   summary: 'A package to perform the analysis of multiphase porous reactive materials'
   description: |
     The Porous material Analysis Toolbox (PATO) is a modular analysis platform for multiphase porous 

@@ -4,7 +4,7 @@ if [ "$(uname)" = "Darwin" ]; then
     LOCALMOUNTPOINT="$CONDA_PREFIX/src/volume_pato"
     if [ -d $LOCALMOUNTPOINT ]; then
 	if mount | grep "on $LOCALMOUNTPOINT " > /dev/null; then
-	    if [ -f $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
+            if [ -f $CONDA_PREFIX/src/volume_pato/PATO-dev/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
 		unset PATO_DIR
 		unset LIB_PATO
 		unset PATO_UNIT_TESTING
@@ -22,8 +22,8 @@ if [ "$(uname)" = "Darwin" ]; then
 		unalias 3D 2>/dev/null
 		unalias muto 2>/dev/null
 		# DYLD_LIBRARY_PATH                                                                                                                              
-		for old_path in $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/src/thirdParty/mutation++/install/lib \
-				    $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/install/lib
+                for old_path in $CONDA_PREFIX/src/volume_pato/PATO-dev/src/thirdParty/mutation++/install/lib \
+                                    $CONDA_PREFIX/src/volume_pato/PATO-dev/install/lib
 		do
 		    if [[ $DYLD_LIBRARY_PATH == *"$old_path:"* ]]; then
 			DYLD_LIBRARY_PATH="${DYLD_LIBRARY_PATH/${old_path}:/}"
@@ -42,7 +42,7 @@ if [ "$(uname)" = "Darwin" ]; then
 fi
 
 if [ "$(uname)" = "Linux" ]; then
-    if [ -f $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
+    if [ -f $CONDA_PREFIX/src/volume_pato/PATO-dev/bashrc ] && [ ! -z "${PATO_DIR}" ]; then
 	unset PATO_DIR
 	unset LIB_PATO
 	unset PATO_UNIT_TESTING
@@ -60,8 +60,8 @@ if [ "$(uname)" = "Linux" ]; then
 	unalias 3D 2>/dev/null
 	unalias muto 2>/dev/null
 	# LD_LIBRARY_PATH
-	for old_path in $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/src/thirdParty/mutation++/install/lib \
-			    $CONDA_PREFIX/src/volume_pato/PATO/PATO-dev-2.3.1/install/lib
+        for old_path in $CONDA_PREFIX/src/volume_pato/PATO-dev/src/thirdParty/mutation++/install/lib \
+                            $CONDA_PREFIX/src/volume_pato/PATO-dev/install/lib
 	do
 	    if [[ $LD_LIBRARY_PATH == *"$old_path:"* ]]; then
                 LD_LIBRARY_PATH="${LD_LIBRARY_PATH/${old_path}:/}"
