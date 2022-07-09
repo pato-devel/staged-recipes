@@ -1,5 +1,5 @@
 {% set name = "foam-extend_for_pato" %}
-{% set version = "4.1_2.3.1" %}
+{% set version = "4.1_3.0.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/jmeurisse/foam-extend_for_pato_conda/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 85099d20e50692e936735989b86019a88bda243906269d18970b193e7a3bd733
+  sha256: a0258fa18e3647a899e0b17eb4fd77d46fa97559c29063117e5557be683086e8
   
 build:
   number: 0
