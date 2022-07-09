@@ -1,12 +1,12 @@
 {% set name = "openfoam_for_pato" %}
-{% set version = "7" %}
+{% set version = "7_2.3.1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/jmeurisse/openfoam_for_pato_conda/archive/refs/tags/7_2.3.1.tar.gz
+  url: https://github.com/jmeurisse/openfoam_for_pato_conda/archive/refs/tags/{{ version }}.tar.gz
   sha256: 9ce0971ded976b604068cbe2a5eb95acc8e0a3e435ff3240062903e325baaa42
   
 build:
