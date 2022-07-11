@@ -12,17 +12,17 @@ build:
 requirements:
   build:
     - openfoam_for_pato ==7_2.3.1
-    - foam-extend_for_pato ==4.1_2.3.1
+    - foam-extend_for_pato ==4.1_3.0.0
     - tar
 
   host:
     - openfoam_for_pato ==7_2.3.1
-    - foam-extend_for_pato ==4.1_2.3.1
+    - foam-extend_for_pato ==4.1_3.0.0
     - tar
 
   run:
     - openfoam_for_pato ==7_2.3.1
-    - foam-extend_for_pato ==4.1_2.3.1
+    - foam-extend_for_pato ==4.1_3.0.0
     - tar
     
 about:

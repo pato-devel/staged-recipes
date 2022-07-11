@@ -7,11 +7,13 @@ if [ ! -d $CONDA_PREFIX/src/volume_pato ]; then
 fi
 
 # create volume_pato.sparsebundle volume
-if [ ! -d $CONDA_PREFIX/src/volume_pato.sparsebundle ]; then
-    curr_dir=$PWD
-    cd $CONDA_PREFIX/src
-    hdiutil create -size 32g -type SPARSEBUNDLE -fs HFSX -volname volume_pato -fsargs -s volume_pato.sparsebundle
-    cd $curr_dir
+if [ "$(uname)" = "Darwin" ]; then
+    if [ ! -d $CONDA_PREFIX/src/volume_pato.sparsebundle ]; then
+	curr_dir=$PWD
+	cd $CONDA_PREFIX/src
+	hdiutil create -size 32g -type SPARSEBUNDLE -fs HFSX -volname volume_pato -fsargs -s volume_pato.sparsebundle
+	cd $curr_dir
+    fi
 fi
 
 # detach and attach the volume
