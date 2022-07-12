@@ -53,7 +53,7 @@ if [ ! -d $CONDA_PREFIX/src/volume_pato/PATO-dev ]; then
     curr_dir=$PWD
     cd $CONDA_PREFIX/src/volume_pato
     echo Compiling PATO-dev
-    git clone https://gitlab.com/PATO/PATO-dev.git
+    git clone git@gitlab.com:PATO/PATO-dev.git
     if [ ! -d $CONDA_PREFIX/src/volume_pato/PATO-dev ]; then
         echo 1>&2 "Error: You need access to PATO-dev git. Check out \"https://pato.ac/\"."
         return
