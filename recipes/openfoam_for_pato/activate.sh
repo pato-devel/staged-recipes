@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 echo activate openfoam_for_pato
+curr_dir=$PWD
 if [ "$(uname)" = "Darwin" ]; then
     if [ ! -d $CONDA_PREFIX/src/volume_openfoam_for_pato ]; then
         mkdir -p $CONDA_PREFIX/src/volume_openfoam_for_pato
@@ -7,7 +8,6 @@ if [ "$(uname)" = "Darwin" ]; then
     for i in "$PREFIX" "$BUILD_PREFIX"
     do
         if mount | grep "on $i/src/volume_openfoam_for_pato " > /dev/null; then
-            curr_dit=$PWD
             cd $i/src
             hdiutil detach volume_openfoam_for_pato
             cd $curr_dir
@@ -34,6 +34,7 @@ if [ "$(uname)" = "Linux" ]; then
             ln -s $old_name $new_name
 	fi
     done
+    cd $curr_dir
 fi
 if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/bashrc ]; then
     if [ "$(uname)" = "Linux" ]; then
