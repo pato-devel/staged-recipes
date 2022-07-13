@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 echo activate foam-extend_for_pato
+curr_dir=$PWD
 if [ "$(uname)" = "Darwin" ]; then
     if [ ! -d $CONDA_PREFIX/src/volume_foam-extend_for_pato ]; then
 	mkdir -p $CONDA_PREFIX/src/volume_foam-extend_for_pato
@@ -7,7 +8,6 @@ if [ "$(uname)" = "Darwin" ]; then
     for i in "$PREFIX" "$BUILD_PREFIX"
     do
         if mount | grep "on $i/src/volume_foam-extend_for_pato " > /dev/null; then
-            curr_dit=$PWD
             cd $i/src
             hdiutil detach volume_foam-extend_for_pato
             cd $curr_dir
@@ -19,7 +19,6 @@ if [ "$(uname)" = "Darwin" ]; then
     fi
 fi
 if [ "$(uname)" = "Linux" ]; then
-    CURRENT_DIR=$PWD
     cd $CONDA_PREFIX/src/volume_foam-extend_for_pato
     zip_files=`find . -path '*/*.zip' -type f`
     if [[ $zip_files ]]; then
@@ -35,7 +34,7 @@ if [ "$(uname)" = "Linux" ]; then
 	    cd $curr_dir
 	done
     fi
-    cd $CURRENT_DIR
+    cd $curr_dir
     dir_gcc=$(dirname `which x86_64-conda-linux-gnu-gcc`)
     cd $dir_gcc
     files=`find . -name "x86_64-conda-linux-gnu-*" -type f`
@@ -47,6 +46,7 @@ if [ "$(uname)" = "Linux" ]; then
             ln -s $old_name $new_name
 	fi
     done
+    cd $curr_dir
 fi
 if [ -f $CONDA_PREFIX/src/volume_foam-extend_for_pato/foam-extend-4.1_for_openfoam-7/etc/bashrc ]; then
     export FOAM_EXTEND_WM_OPTIONS=`ls $CONDA_PREFIX/src/volume_foam-extend_for_pato/foam-extend-4.1_for_openfoam-7/lib`
