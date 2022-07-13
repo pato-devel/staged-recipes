@@ -11,3 +11,14 @@ do
     mkdir -p "${PREFIX}/etc/conda/${CHANGE}.d"
     cp "${RECIPE_DIR}/${CHANGE}.sh" "${PREFIX}/etc/conda/${CHANGE}.d/${PKG_NAME}_${CHANGE}.sh"
 done
+
+PATO_VERSION=PATO-v3.0
+curr_dir=$PWD
+cd $CONDA_PREFIX/src/volume_pato
+echo Download $PATO_VERSION
+wget http://pato.ac/wp-content/uploads/$PATO_VERSION.tar.gz
+cd $PATO_VERSION
+export PATO_DIR=$PWD/
+source $PATO_DIR/bashrc
+$PATO_DIR/Allwmake
+cd $curr_dir
