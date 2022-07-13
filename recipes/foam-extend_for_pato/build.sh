@@ -79,6 +79,9 @@ if [ "$(uname)" = "Linux" ]; then
 fi
 set +e
 cp prefs.sh-build prefs.sh # using PREFIX
+if [ "$(uname)" = "Linux" ]; then
+    export WM_PROJECT_DIR=$PREFIX/src/volume_foam-extend_for_pato/foam-extend-4.1_for_openfoam-7
+fi
 source bashrc
 cp prefs.sh-run prefs.sh # using CONDA_PREFIX
 set -e
