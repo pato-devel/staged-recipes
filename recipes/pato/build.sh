@@ -13,12 +13,16 @@ do
 done
 
 PATO_VERSION=PATO-v3.0
-curr_dir=$PWD
-cd $CONDA_PREFIX/src/volume_pato
-echo Download $PATO_VERSION
-wget http://pato.ac/wp-content/uploads/$PATO_VERSION.tar.gz
-cd $PATO_VERSION
-export PATO_DIR=$PWD/
-source $PATO_DIR/bashrc
-$PATO_DIR/Allwmake
-cd $curr_dir
+curr_dir=${PWD}
+if [ ! -d ${CONDA_PREFIX}/src/volume_pato ]; then
+    mkdir -p ${CONDA_PREFIX}/src/volume_pato
+fi
+cd ${CONDA_PREFIX}/src/volume_pato
+echo Download ${PATO_VERSION}
+curl http://pato.ac/wp-content/uploads/${PATO_VERSION}.tar.gz --output ${PATO_VERSION}.tar.gz
+tar xvf ${PATO_VERSION}.tar.gz
+cd ${PATO_VERSION}
+export PATO_DIR=${PWD}
+source ${PATO_DIR}/bashrc
+${PATO_DIR}/Allwmake
+cd ${curr_dir}
