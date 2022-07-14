@@ -11,15 +11,6 @@ if [ ! -d $CONDA_PREFIX/src/volume_pato ]; then
     mkdir -p $CONDA_PREFIX/src/volume_pato
 fi
 
-# create volume_pato.sparsebundle volume
-if [ "$(uname)" = "Darwin" ]; then
-    if [ ! -d $CONDA_PREFIX/src/volume_pato.sparsebundle ]; then
-	cd $CONDA_PREFIX/src
-	hdiutil create -size 32g -type SPARSEBUNDLE -fs HFSX -volname volume_pato -fsargs -s volume_pato.sparsebundle
-	cd $curr_dir
-    fi
-fi
-
 # detach and attach the volume
 if [ "$(uname)" = "Darwin" ]; then
     for i in "$PREFIX" "$BUILD_PREFIX"
@@ -36,6 +27,12 @@ if [ "$(uname)" = "Darwin" ]; then
     fi
 fi
 
+# untar volume_pato
+if [ ! -d $CONDA_PREFIX/src/volume_pato ]; then
+    tar xvf $CONDA_PREFIX/src/volume_pato.tar -C $CONDA_PREFIX/src > /dev/null
+    rm -f $CONDA_PREFIX/src/volume_pato.tar
+fi
+    
 # create soft links for the gnu tools (gcc, g++, ...)
 if [ "$(uname)" = "Linux" ]; then
     dir_gcc=$(dirname `which x86_64-conda-linux-gnu-gcc`)
