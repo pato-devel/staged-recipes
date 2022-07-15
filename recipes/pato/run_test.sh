@@ -11,4 +11,4 @@ if [ "$(uname)" = "Darwin" ]; then
     hdiutil detach volume_foam-extend_for_pato
     # detach volume_pato
     hdiutil detach volume_pato
-else
+fi
