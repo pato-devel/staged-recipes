@@ -6,13 +6,11 @@ curr_dir=$PWD
 # PATO version
 PATO_VERSION=PATO-v3.0
 
-# create volume_pato folder
-if [ ! -d $CONDA_PREFIX/src/volume_pato ]; then
-    mkdir -p $CONDA_PREFIX/src/volume_pato
-fi
-
-# detach and attach the volume
+# create volume_pato folder and detach/attach the volume
 if [ "$(uname)" = "Darwin" ]; then
+    if [ ! -d $CONDA_PREFIX/src/volume_pato ]; then
+	mkdir -p $CONDA_PREFIX/src/volume_pato
+    fi
     for i in "$PREFIX" "$BUILD_PREFIX"
     do
         if mount | grep "on $i/src/volume_pato " > /dev/null; then
@@ -27,14 +25,14 @@ if [ "$(uname)" = "Darwin" ]; then
     fi
 fi
 
-# untar volume_pato
-if [ ! -d $CONDA_PREFIX/src/volume_pato ]; then
-    tar xvf $CONDA_PREFIX/src/volume_pato.tar -C $CONDA_PREFIX/src > /dev/null
-    rm -f $CONDA_PREFIX/src/volume_pato.tar
-fi
-    
 # create soft links for the gnu tools (gcc, g++, ...)
 if [ "$(uname)" = "Linux" ]; then
+    # untar volume_pato
+    if [ ! -d $CONDA_PREFIX/src/volume_pato ]; then
+	tar xvf $CONDA_PREFIX/src/volume_pato.tar -C $CONDA_PREFIX/src > /dev/null
+	rm -f $CONDA_PREFIX/src/volume_pato.tar
+    fi
+    # create soft links for the gnu tools (gcc, g++, ...)
     dir_gcc=$(dirname `which x86_64-conda-linux-gnu-gcc`)
     cd $dir_gcc
     files=`find . -name "x86_64-conda-linux-gnu-*" -type f`
