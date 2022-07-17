@@ -5,10 +5,14 @@ set -x # show the commands
 curr_dir=$PWD
 echo -e "\n### TESTING PATO ###\n"
 cd $PREFIX
+# Source PATO run functions
+. $PATO_DIR/src/applications/utilities/runFunctions/RunFunctions
+# Initialize the script
+pato_init
 # run tests
 which runtests
 runtests
-
+# detach volume
 if [ "$(uname)" = "Darwin" ]; then
     cd $PREFIX/src
     # detach volume_openfoam_for_pato
