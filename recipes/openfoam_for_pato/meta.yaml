@@ -1,5 +1,5 @@
 {% set name = "openfoam_for_pato" %}
-{% set version = "7_2.3.1" %}
+{% set version = "10_3" %}
 
 package:
   name: {{ name|lower }}

@@ -81,11 +81,11 @@ cp libmgrid.a libMGridGen.a
 
 # get OpenFOAM src
 cd $PREFIX/src/volume_openfoam_for_pato/OpenFOAM
-tar xvf OpenFOAM-7.tar
-tar xvf ThirdParty-7.tar
-# compile OpenFOAM-7
+tar xvf OpenFOAM-10.tar
+tar xvf ThirdParty-10.tar
+# compile OpenFOAM-10
 export WM_NCOMPPROCS=`nproc` # parallel build
-cd $PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7
+cd $PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-10
 if [ "$(uname)" = "Linux" ]; then
     alias wmRefresh=""
 fi
