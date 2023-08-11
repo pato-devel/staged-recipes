@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/jmeurisse/openfoam_for_pato_conda/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 12125855d2c8dd3473023b34cbaa75fe41863bd838063576fe64bbf36df072ed
+  sha256: 8841d09991cc849d4fe50d582ae56ea6278efa1de3b276d37f673c21f43cf72d
   
 build:
   number: 0
