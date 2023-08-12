@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/pato-devel/openfoam_for_pato_conda/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 8841d09991cc849d4fe50d582ae56ea6278efa1de3b276d37f673c21f43cf72d
+  sha256: a5db03f2ce8f13512c34220c4c82bfb621cef3a1095a1fccb49420b85f49396a
   
 build:
   number: 0
