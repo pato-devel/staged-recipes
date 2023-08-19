@@ -12,7 +12,7 @@ do
     cp "${RECIPE_DIR}/${CHANGE}.sh" "${PREFIX}/etc/conda/${CHANGE}.d/${PKG_NAME}_${CHANGE}.sh"
 done
 
-PATO_VERSION=PATO-v3.0
+PATO_VERSION=PATO-v3.1
 curr_dir=${PWD}
 
 # Create soft links for the compilers
