@@ -4,7 +4,7 @@ echo activate PATO
 curr_dir=$PWD
 
 # PATO version
-PATO_VERSION=PATO-v3.0
+PATO_VERSION=3.1
 
 # create volume_pato folder and detach/attach the volume
 if [ "$(uname)" = "Darwin" ]; then
@@ -48,7 +48,7 @@ if [ "$(uname)" = "Linux" ]; then
 fi
 
 # compile and source PATO
-if [ -f $CONDA_PREFIX/src/volume_pato/$PATO_VERSION/bashrc ]; then
-    export PATO_DIR=$CONDA_PREFIX/src/volume_pato/$PATO_VERSION
+if [ -f $CONDA_PREFIX/src/volume_pato/pato-$PATO_VERSION/bashrc ]; then
+    export PATO_DIR=$CONDA_PREFIX/src/volume_pato/pato-$PATO_VERSION
     source $PATO_DIR/bashrc
 fi

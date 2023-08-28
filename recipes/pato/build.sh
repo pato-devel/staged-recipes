@@ -12,7 +12,7 @@ do
     cp "${RECIPE_DIR}/${CHANGE}.sh" "${PREFIX}/etc/conda/${CHANGE}.d/${PKG_NAME}_${CHANGE}.sh"
 done
 
-PATO_VERSION=PATO-v3.1
+PATO_VERSION=3.1
 curr_dir=${PWD}
 
 # Create soft links for the compilers
@@ -46,12 +46,12 @@ fi
 
 # Download PATO
 cd ${PREFIX}/src/volume_pato
-echo Download ${PATO_VERSION}
-curl http://pato.ac/wp-content/uploads/${PATO_VERSION}.tar.gz --output ${PATO_VERSION}.tar.gz
-tar xvf ${PATO_VERSION}.tar.gz
+echo Download pato-${PATO_VERSION}
+curl -L https://github.com/nasa/pato/archive/refs/tags/${PATO_VERSION}.tar.gz --output pato-${PATO_VERSION}.tar.gz
+tar xvf pato-${PATO_VERSION}.tar.gz
 
 # Compile PATO
-cd ${PATO_VERSION}
+cd pato-${PATO_VERSION}
 export PATO_DIR=${PWD}
 source ${PATO_DIR}/bashrc
 ${PATO_DIR}/Allwmake
