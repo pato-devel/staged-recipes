@@ -37,8 +37,6 @@ if [ "$(uname)" = "Linux" ]; then
     cd $curr_dir
 fi
 if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/bashrc ]; then
-    if [ "$(uname)" = "Linux" ]; then
-	alias wmRefresh=""
-    fi
+    alias wmRefresh=""
     source $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/bashrc
 fi

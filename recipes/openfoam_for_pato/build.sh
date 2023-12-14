@@ -53,13 +53,7 @@ if [ "$(uname)" = "Darwin" ]; then
     mv $SRC_DIR/src/Both/* $PREFIX/src/volume_openfoam_for_pato/
     rm -rf $SRC_DIR/src
     mv $SRC_DIR/change_lib_path_macos.py $PREFIX/src/
-    # compile gsed
-    cd $PREFIX/src/volume_openfoam_for_pato/sed
-    tar xvf sed-4.8.tar.gz
-    cd $PREFIX/src/volume_openfoam_for_pato/sed/sed-4.8
-    ./configure --prefix=$PREFIX
-    make; make install
-    mv $PREFIX/bin/sed $PREFIX/bin/gsed
+    cp $PREFIX/bin/sed $PREFIX/bin/gsed
     sed_cmd=$PREFIX/bin/gsed
 fi
 
@@ -86,9 +80,9 @@ tar xvf ThirdParty-7.tar
 # compile OpenFOAM-7
 export WM_NCOMPPROCS=`nproc` # parallel build
 cd $PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7
-if [ "$(uname)" = "Linux" ]; then
-    alias wmRefresh=""
-fi
+#if [ "$(uname)" = "Linux" ]; then
+alias wmRefresh=""
+#fi
 source etc/bashrc
 ./Allwmake -j
 
