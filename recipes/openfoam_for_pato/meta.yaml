@@ -15,7 +15,8 @@ build:
 
 requirements:
   build:
-    - sed  # [darwin]
+    - sed ==4.8  # [target_platform == 'osx-64']
+    - sed ==4.8  # [target_platform == 'osx-arm64']
     - paraview ==5.11.2
     - {{ compiler('c') }}  # [darwin]
     - {{ compiler('cxx') }}  # [darwin]
@@ -37,6 +38,8 @@ requirements:
     - zlib ==1.2.11  # [linux]
 
   host:
+    - sed ==4.8  # [target_platform == 'osx-64']
+    - sed ==4.8  # [target_platform == 'osx-arm64']
     - paraview ==5.11.2
     - boost ==1.72  # [linux]
     - boost ==1.72  # [target_platform == 'osx-64']
@@ -70,6 +73,8 @@ requirements:
     - zlib ==1.2.11  # [linux]
 
   run:
+    - sed ==4.8  # [target_platform == 'osx-64']
+    - sed ==4.8  # [target_platform == 'osx-arm64']
     - paraview ==5.11.2
     - boost ==1.72  # [linux]
     - boost ==1.72  # [darwin]
