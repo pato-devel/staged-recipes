@@ -72,7 +72,12 @@ cp libmgrid.a libMGridGen.a
 cd $PREFIX/src/volume_foam-extend_for_pato
 tar xvf foam-extend-4.1_for_openfoam-7.tar
 # compile foam-extend 4.1
-export WM_NCOMPPROCS=`nproc` # parallel build
+if [ "$(uname)" = "Linux" ]; then
+    export WM_NCOMPPROCS=`nproc` # parallel build
+fi
+if [ "$(uname)" = "Darwin" ]; then
+    export WM_NCOMPPROCS=`sysctl -n hw.ncpu` # parallel build
+fi
 cd $PREFIX/src/volume_foam-extend_for_pato/foam-extend-4.1_for_openfoam-7/etc
 if [ "$(uname)" = "Linux" ]; then
     alias wmRefresh=""
