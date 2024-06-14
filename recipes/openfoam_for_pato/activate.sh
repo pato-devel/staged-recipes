@@ -18,6 +18,7 @@ if [ "$(uname)" = "Darwin" ]; then
 	hdiutil attach -mountpoint $CONDA_PREFIX/src/volume_openfoam_for_pato $CONDA_PREFIX/src/openfoam_for_pato_conda.sparsebundle
     fi
 fi
+
 if [ "$(uname)" = "Linux" ]; then
     if [ ! -d $CONDA_PREFIX/src/volume_openfoam_for_pato ]; then
 	tar xvf $CONDA_PREFIX/src/volume_openfoam_for_pato.tar -C $CONDA_PREFIX/src > /dev/null
@@ -36,7 +37,19 @@ if [ "$(uname)" = "Linux" ]; then
     done
     cd $curr_dir
 fi
+
 if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/bashrc ]; then
     alias wmRefresh=""
     source $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/bashrc
+fi
+
+# Change the codesign author if the checkMesh executable is zsh killed
+if [ "$(uname)" = "Darwin" ]; then
+    output=$(checkMesh -help 2>&1)
+    output_len=${#output}
+    if [ ! $output_len -gt 0 ]; then
+	platforms_folder=$CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/darwin64ClangDPInt32Opt
+	find $platforms_folder/lib -type f -name "*.dylib" -exec /usr/bin/codesign -f -d -s - {} \; > /dev/null 2>&1
+	find $platforms_folder/bin -type f -exec /usr/bin/codesign -f -d -s - {} \; > /dev/null	2>&1
+    fi
 fi
