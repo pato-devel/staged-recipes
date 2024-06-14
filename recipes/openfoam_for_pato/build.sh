@@ -78,7 +78,12 @@ cd $PREFIX/src/volume_openfoam_for_pato/OpenFOAM
 tar xvf OpenFOAM-7.tar
 tar xvf ThirdParty-7.tar
 # compile OpenFOAM-7
-export WM_NCOMPPROCS=`nproc` # parallel build
+if [ "$(uname)" = "Linux" ]; then
+    export WM_NCOMPPROCS=`nproc` # parallel build
+fi
+if [ "$(uname)" = "Darwin" ]; then
+    export WM_NCOMPPROCS=`sysctl -n hw.ncpu` # parallel build
+fi
 cd $PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7
 #if [ "$(uname)" = "Linux" ]; then
 alias wmRefresh=""
