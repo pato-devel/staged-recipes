@@ -44,12 +44,12 @@ if [ -f $CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/etc/bashr
 fi
 
 # Change the codesign author if the checkMesh executable is zsh killed
-if [ "$(uname)" = "Darwin" ]; then
-    output=$(checkMesh -help 2>&1)
-    output_len=${#output}
-    if [ ! $output_len -gt 0 ]; then
-	platforms_folder=$CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/darwin64ClangDPInt32Opt
-	find $platforms_folder/lib -type f -name "*.dylib" -exec /usr/bin/codesign -f -d -s - {} \; > /dev/null 2>&1
-	find $platforms_folder/bin -type f -exec /usr/bin/codesign -f -d -s - {} \; > /dev/null	2>&1
-    fi
-fi
+#if [ "$(uname)" = "Darwin" ]; then
+#    output=$(checkMesh -help 2>&1)
+#    output_len=${#output}
+#    if [ ! $output_len -gt 0 ]; then
+#	platforms_folder=$CONDA_PREFIX/src/volume_openfoam_for_pato/OpenFOAM/OpenFOAM-7/platforms/darwin64ClangDPInt32Opt
+#	find $platforms_folder/lib -type f -name "*.dylib" -exec /usr/bin/codesign -f -d -s - {} \; > /dev/null 2>&1
+#	find $platforms_folder/bin -type f -exec /usr/bin/codesign -f -d -s - {} \; > /dev/null	2>&1
+#    fi
+#fi
