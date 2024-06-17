@@ -29,6 +29,11 @@ if [ "$(uname)" = "Linux" ]; then
     cd $current_dir
 fi
 
+# Create soft link for mac OS tools
+if [ "$(uname)" = "Darwin" ]; then
+    ln -s arm64-apple-darwin20.0.0-install_name_tool install_name_tool
+fi
+
 # create volume_openfoam_for_pato folder
 if [ ! -d $PREFIX/src/volume_openfoam_for_pato ]; then
     mkdir -p $PREFIX/src/volume_openfoam_for_pato
