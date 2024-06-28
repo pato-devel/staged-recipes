@@ -35,6 +35,7 @@ fi
 if [ ! -d ${PREFIX}/src/volume_pato ]; then
     mkdir -p ${PREFIX}/src/volume_pato
 fi
+
 # Create and attach volume_pato
 if [ "$(uname)" = "Darwin" ]; then
     if [ ! -d $PREFIX/src/volume_pato.sparsebundle ]; then
