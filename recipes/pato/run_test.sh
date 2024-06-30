@@ -12,7 +12,7 @@ alias wmRefresh="" # needed before to source openfoam bashrc
 pato_init
 # run tests
 which runtests
-runtests -h # just check if the executable runs, issues with restart test
+runtests
 # detach volume
 if [ "$(uname)" = "Darwin" ]; then
     cd $PREFIX/src
