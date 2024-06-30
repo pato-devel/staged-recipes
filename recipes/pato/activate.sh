@@ -71,13 +71,12 @@ else
 fi
 
 # Change the codesign author if the runtests executable is zsh killed
+set +e # for run_test.sh during conda build
 if [ "$(uname)" = "Darwin" ]; then
     for dir_i in "$CONDA_PREFIX" "$PREFIX"
     do
 	if [ -f $dir_i/src/volume_pato/PATO-dev/install/bin/runtests ]; then
-	    set +e
 	    output=$($dir_i/src/volume_pato/PATO-dev/install/bin/runtests -h 2>&1)
-	    set -e
 	    output_len=${#output}
 	    if [ ! $output_len -gt 0 ]; then
 		echo "$dir_i: codesign executables and libraries in OpenFOAM, foam-extend, and PATO."

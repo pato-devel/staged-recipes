@@ -14,16 +14,19 @@ requirements:
     - openfoam_for_pato ==7_2.3.1
     - foam-extend_for_pato ==4.1_3.0.0
     - tar
+    - m4
 
   host:
     - openfoam_for_pato ==7_2.3.1
     - foam-extend_for_pato ==4.1_3.0.0
     - tar
+    - m4
 
   run:
     - openfoam_for_pato ==7_2.3.1
     - foam-extend_for_pato ==4.1_3.0.0
     - tar
+    - m4
     
 about:
   home: https://pato.ac
