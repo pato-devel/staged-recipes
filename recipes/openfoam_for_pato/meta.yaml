@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/pato-devel/openfoam_for_pato_conda/archive/refs/tags/{{ version }}_osx_arm64.tar.gz
-  sha256: e07ad7ea80fa1a3b0b5bc2e0b3023ccd9dd11cd4d1e9085365869d6497c3c9ff
+  sha256: 21177b2e744f698bb1c2edb9359f68e2976433189d022c5bb13ece7f1c1f5260
   
 build:
   number: 0
