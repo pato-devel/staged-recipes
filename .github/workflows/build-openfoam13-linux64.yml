@@ -41,27 +41,22 @@ jobs:
         run: |
           conda install conda-build -c conda-forge --override-channels -y
 
-      - name: Patch OpenFOAM source for Linux
-        run: |
-          echo "--- top-level source structure ---"
-          ls "$GITHUB_WORKSPACE/openfoam13_for_pato_conda/"
-          INT_H=$(find "$GITHUB_WORKSPACE/openfoam13_for_pato_conda" -name "int.H" -path "*/ints/int/int.H" | head -1)
-          if [ -z "$INT_H" ]; then
-            echo "ERROR: int.H not found, showing 3-level tree:"
-            find "$GITHUB_WORKSPACE/openfoam13_for_pato_conda" -maxdepth 3 -type d
-            exit 1
-          fi
-          echo "Patching: $INT_H"
-          sed -i 's/MAXMIN(string::size_type,string::size_type,string::size_type)/#ifdef __APPLE__\nMAXMIN(string::size_type,string::size_type,string::size_type)\n#endif/' "$INT_H"
-          echo "Patched int.H"
-          grep -A2 -B1 "__APPLE__" "$INT_H"
-
       - name: Set source path in meta.yaml
         run: |
           cp -r recipes/openfoam13_for_pato /tmp/openfoam13_recipe
           python3 -c 'import re,os; m=open("/tmp/openfoam13_recipe/meta.yaml").read(); m=re.sub(r"^\s+url:.*\n","",m,flags=re.M); m=re.sub(r"^\s+sha256:.*\n","  path: "+os.environ["GITHUB_WORKSPACE"]+"/openfoam13_for_pato_conda\n",m,flags=re.M); open("/tmp/openfoam13_recipe/meta.yaml","w").write(m)'
           echo "--- meta.yaml after patch ---"
           cat /tmp/openfoam13_recipe/meta.yaml
+          printf '%s\n' \
+            '# Patch int.H for Linux (string::size_type==uint64_t==unsigned long conflict)' \
+            'if [ "$(uname)" = "Linux" ]; then' \
+            '    INT_H="$PREFIX/src/volume_openfoam13_for_pato/OpenFOAM/OpenFOAM-13/src/OpenFOAM/primitives/ints/int/int.H"' \
+            '    sed -i "s|MAXMIN(string::size_type,string::size_type,string::size_type)|#ifdef __APPLE__\\nMAXMIN(string::size_type,string::size_type,string::size_type)\\n#endif|" "$INT_H"' \
+            'fi' \
+            > /tmp/linux_patch.sh
+          sed -i '/tar xvf ThirdParty-13.tar/r /tmp/linux_patch.sh' /tmp/openfoam13_recipe/build.sh
+          echo "--- build.sh around tar extraction ---"
+          grep -A8 "tar xvf ThirdParty-13.tar" /tmp/openfoam13_recipe/build.sh
 
       - name: Build
         shell: bash -l {0}
