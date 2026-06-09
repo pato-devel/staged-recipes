@@ -8,6 +8,14 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+      - name: Free disk space
+        run: |
+          df -h
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+          sudo rm -rf /usr/local/lib/android /usr/share/swift /usr/local/.ghcup
+          sudo docker image prune --all --force || true
+          df -h
+
       - name: Checkout staged-recipes
         uses: actions/checkout@v4
         with:
