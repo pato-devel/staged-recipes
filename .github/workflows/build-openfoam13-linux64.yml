@@ -43,7 +43,15 @@ jobs:
 
       - name: Patch OpenFOAM source for Linux
         run: |
-          INT_H="$GITHUB_WORKSPACE/openfoam13_for_pato_conda/OpenFOAM/OpenFOAM-13/src/OpenFOAM/primitives/ints/int/int.H"
+          echo "--- top-level source structure ---"
+          ls "$GITHUB_WORKSPACE/openfoam13_for_pato_conda/"
+          INT_H=$(find "$GITHUB_WORKSPACE/openfoam13_for_pato_conda" -name "int.H" -path "*/ints/int/int.H" | head -1)
+          if [ -z "$INT_H" ]; then
+            echo "ERROR: int.H not found, showing 3-level tree:"
+            find "$GITHUB_WORKSPACE/openfoam13_for_pato_conda" -maxdepth 3 -type d
+            exit 1
+          fi
+          echo "Patching: $INT_H"
           sed -i 's/MAXMIN(string::size_type,string::size_type,string::size_type)/#ifdef __APPLE__\nMAXMIN(string::size_type,string::size_type,string::size_type)\n#endif/' "$INT_H"
           echo "Patched int.H"
           grep -A2 -B1 "__APPLE__" "$INT_H"
