@@ -12,11 +12,9 @@ jobs:
 
     steps:
       - name: Checkout staged-recipes
-        uses: actions/checkout@v3
-        with:
-          repository: pato-devel/staged-recipes
-          ref: openfoam13_for_pato
-          token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/pato-devel/staged-recipes.git \
+            --branch openfoam13_for_pato --single-branch .
 
       - name: Install git-lfs
         run: |
@@ -25,13 +23,10 @@ jobs:
           git lfs install
 
       - name: Checkout source with LFS
-        uses: actions/checkout@v3
-        with:
-          repository: pato-devel/openfoam13_for_pato_conda
-          ref: 13_20250911
-          path: openfoam13_for_pato_conda
-          lfs: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/pato-devel/openfoam13_for_pato_conda.git \
+            --branch 13_20250911 --single-branch openfoam13_for_pato_conda
+          cd openfoam13_for_pato_conda && git lfs pull
 
       - name: Install conda-build and awscli
         run: |
@@ -53,11 +48,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
         run: |
-          # Copy package to a local channel dir
           mkdir -p conda-channel/linux-64
           cp /opt/conda/conda-bld/linux-64/openfoam13_for_pato-*.conda conda-channel/linux-64/
-          # Generate repodata.json
           conda index conda-channel
-          # Upload to R2
           aws s3 sync conda-channel/linux-64 s3://pato-conda-channel/linux-64 \
             --endpoint-url $R2_ENDPOINT
