@@ -39,6 +39,7 @@ jobs:
             condaforge/linux-anvil-cos7-x86_64 \
             bash -c "
               set -e
+              chmod -R a+w /workspace
               conda install conda-build -c conda-forge --override-channels -y
               sed -i 's|git_url:.*||' /workspace/recipes/openfoam13_for_pato/meta.yaml
               sed -i 's|git_rev:.*|path: /workspace/openfoam13_for_pato_conda|' /workspace/recipes/openfoam13_for_pato/meta.yaml
