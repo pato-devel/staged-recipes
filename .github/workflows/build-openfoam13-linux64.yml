@@ -44,8 +44,8 @@ jobs:
       - name: Set source path in meta.yaml
         run: |
           cp -r recipes/openfoam13_for_pato /tmp/openfoam13_recipe
-          sed -i "/git_url:/d" /tmp/openfoam13_recipe/meta.yaml
-          sed -i "s|git_rev:.*|path: ${{ github.workspace }}/openfoam13_for_pato_conda|" \
+          sed -i "/  url:/d" /tmp/openfoam13_recipe/meta.yaml
+          sed -i "s|  sha256:.*|  path: ${{ github.workspace }}/openfoam13_for_pato_conda|" \
             /tmp/openfoam13_recipe/meta.yaml
           echo "--- meta.yaml after patch ---"
           cat /tmp/openfoam13_recipe/meta.yaml
