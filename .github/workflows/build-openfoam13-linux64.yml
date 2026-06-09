@@ -13,7 +13,7 @@ jobs:
         with:
           repository: pato-devel/staged-recipes
           ref: openfoam13_for_pato
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Install git-lfs
         run: |
@@ -27,7 +27,7 @@ jobs:
           ref: 13_20250911
           path: openfoam13_for_pato_conda
           lfs: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Build in CentOS 7 container
         run: |
