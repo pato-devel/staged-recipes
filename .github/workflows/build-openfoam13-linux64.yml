@@ -29,31 +29,40 @@ jobs:
           lfs: true
           token: ${{ secrets.PAT_TOKEN }}
 
-      - name: Build in CentOS 7 container
+      - name: Setup conda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          channels: conda-forge
+          channel-priority: strict
+
+      - name: Install conda-build
+        shell: bash -l {0}
         run: |
-          mkdir -p ${{ github.workspace }}/conda-bld
-          docker run --rm \
-            -v ${{ github.workspace }}:/workspace \
-            -v ${{ github.workspace }}/conda-bld:/opt/conda/conda-bld \
-            -w /workspace \
-            condaforge/linux-anvil-cos7-x86_64 \
-            bash -c "
-              set -e
-              cp -r /workspace/recipes/openfoam13_for_pato /tmp/openfoam13_recipe
-              sed -i 's|git_url:.*||' /tmp/openfoam13_recipe/meta.yaml
-              sed -i 's|git_rev:.*|path: /workspace/openfoam13_for_pato_conda|' /tmp/openfoam13_recipe/meta.yaml
-              conda build /tmp/openfoam13_recipe --no-test -c conda-forge --override-channels
-            "
+          conda install conda-build -c conda-forge --override-channels -y
+
+      - name: Set source path in meta.yaml
+        run: |
+          cp -r recipes/openfoam13_for_pato /tmp/openfoam13_recipe
+          sed -i "s|git_url:.*||" /tmp/openfoam13_recipe/meta.yaml
+          sed -i "s|git_rev:.*|path: ${{ github.workspace }}/openfoam13_for_pato_conda|" \
+            /tmp/openfoam13_recipe/meta.yaml
+
+      - name: Build
+        shell: bash -l {0}
+        run: |
+          conda build /tmp/openfoam13_recipe --no-test -c conda-forge --override-channels
 
       - name: Generate repodata and upload to R2
+        shell: bash -l {0}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
         run: |
-          pip install conda-index awscli
           mkdir -p conda-channel/linux-64
-          cp ${{ github.workspace }}/conda-bld/linux-64/openfoam13_for_pato-*.conda conda-channel/linux-64/
-          conda-index conda-channel
+          cp $(conda info --base)/conda-bld/linux-64/openfoam13_for_pato-*.conda conda-channel/linux-64/
+          conda index conda-channel
+          pip install awscli
           aws s3 sync conda-channel/linux-64 s3://pato-conda-channel/linux-64 \
             --endpoint-url $R2_ENDPOINT
