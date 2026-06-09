@@ -48,17 +48,26 @@ jobs:
           echo "--- meta.yaml after patch ---"
           cat /tmp/openfoam13_recipe/meta.yaml
           printf '%s\n' \
-            '# Patch int.H for Linux (string::size_type==uint64_t==unsigned long conflict)' \
             'if [ "$(uname)" = "Linux" ]; then' \
             '    INT_H="$PREFIX/src/volume_openfoam13_for_pato/OpenFOAM/OpenFOAM-13/src/OpenFOAM/primitives/ints/int/int.H"' \
             '    sed -i "s|MAXMIN(string::size_type,string::size_type,string::size_type)|#ifdef __APPLE__\\nMAXMIN(string::size_type,string::size_type,string::size_type)\\n#endif|" "$INT_H"' \
             '    export CPATH="$PREFIX/include${CPATH:+:$CPATH}"' \
             '    export LIBRARY_PATH="$PREFIX/lib${LIBRARY_PATH:+:$LIBRARY_PATH}"' \
             'fi' \
-            > /tmp/linux_patch.sh
-          sed -i '/tar xvf ThirdParty-13.tar/r /tmp/linux_patch.sh' /tmp/openfoam13_recipe/build.sh
-          echo "--- build.sh around tar extraction ---"
-          grep -A8 "tar xvf ThirdParty-13.tar" /tmp/openfoam13_recipe/build.sh
+            > /tmp/linux_patch1.sh
+          sed -i '/tar xvf ThirdParty-13.tar/r /tmp/linux_patch1.sh' /tmp/openfoam13_recipe/build.sh
+          printf '%s\n' \
+            'if [ "$(uname)" = "Linux" ]; then' \
+            '    export ZOLTAN_TYPE=none' \
+            '    export SCOTCH_ARCH_PATH="$PREFIX"' \
+            '    export SCOTCH_INCLUDE_DIR="$PREFIX/include"' \
+            '    export PTSCOTCH_ARCH_PATH="$PREFIX"' \
+            '    export PTSCOTCH_INCLUDE_DIR="$PREFIX/include"' \
+            'fi' \
+            > /tmp/linux_patch2.sh
+          sed -i '/source etc\/bashrc/r /tmp/linux_patch2.sh' /tmp/openfoam13_recipe/build.sh
+          echo "--- build.sh around bashrc source ---"
+          grep -A10 "source etc/bashrc" /tmp/openfoam13_recipe/build.sh
 
       - name: Build
         shell: bash -l {0}
