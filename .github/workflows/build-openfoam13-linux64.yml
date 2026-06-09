@@ -39,7 +39,8 @@ jobs:
             condaforge/linux-anvil-cos7-x86_64 \
             bash -c "
               set -e
-              CONDA_NO_PLUGINS=true conda install conda-build -c conda-forge --override-channels -y --freeze-installed
+              conda config --set solver classic
+              conda install conda-build -c conda-forge --override-channels -y
               cp -r /workspace/recipes/openfoam13_for_pato /tmp/openfoam13_recipe
               sed -i 's|git_url:.*||' /tmp/openfoam13_recipe/meta.yaml
               sed -i 's|git_rev:.*|path: /workspace/openfoam13_for_pato_conda|' /tmp/openfoam13_recipe/meta.yaml
