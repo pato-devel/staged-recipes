@@ -44,18 +44,9 @@ jobs:
       - name: Patch OpenFOAM source for Linux
         run: |
           INT_H="$GITHUB_WORKSPACE/openfoam13_for_pato_conda/OpenFOAM/OpenFOAM-13/src/OpenFOAM/primitives/ints/int/int.H"
-          python3 -c "
-f = open('$INT_H')
-content = f.read()
-f.close()
-old = 'MAXMIN(string::size_type,string::size_type,string::size_type)'
-new = '#ifdef __APPLE__\nMAXMIN(string::size_type,string::size_type,string::size_type)\n#endif'
-content = content.replace(old, new)
-f = open('$INT_H', 'w')
-f.write(content)
-f.close()
-print('Patched int.H: guarded string::size_type MAXMIN with __APPLE__')
-"
+          sed -i 's/MAXMIN(string::size_type,string::size_type,string::size_type)/#ifdef __APPLE__\nMAXMIN(string::size_type,string::size_type,string::size_type)\n#endif/' "$INT_H"
+          echo "Patched int.H"
+          grep -A2 -B1 "__APPLE__" "$INT_H"
 
       - name: Set source path in meta.yaml
         run: |
