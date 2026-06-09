@@ -51,7 +51,7 @@ jobs:
       - name: Build
         shell: bash -l {0}
         run: |
-          conda build /tmp/openfoam13_recipe --no-test -c conda-forge --override-channels
+          conda-build /tmp/openfoam13_recipe --no-test -c conda-forge --override-channels
 
       - name: Generate repodata and upload to R2
         shell: bash -l {0}
