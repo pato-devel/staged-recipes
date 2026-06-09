@@ -44,9 +44,17 @@ jobs:
       - name: Set source path in meta.yaml
         run: |
           cp -r recipes/openfoam13_for_pato /tmp/openfoam13_recipe
-          sed -i "/  url:/d" /tmp/openfoam13_recipe/meta.yaml
-          sed -i "s|  sha256:.*|  path: ${{ github.workspace }}/openfoam13_for_pato_conda|" \
-            /tmp/openfoam13_recipe/meta.yaml
+          python3 - <<'PYEOF'
+import re, os
+path = os.environ['GITHUB_WORKSPACE'] + '/openfoam13_for_pato_conda'
+meta = '/tmp/openfoam13_recipe/meta.yaml'
+with open(meta) as f:
+    content = f.read()
+# Replace entire source section with local path
+content = re.sub(r'source:\n(\s+\S+:.*\n)+', f'source:\n  path: {path}\n', content)
+with open(meta, 'w') as f:
+    f.write(content)
+PYEOF
           echo "--- meta.yaml after patch ---"
           cat /tmp/openfoam13_recipe/meta.yaml
 
