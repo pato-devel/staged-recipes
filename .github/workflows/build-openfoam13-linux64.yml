@@ -40,9 +40,9 @@ jobs:
             bash -c "
               set -e
               conda install conda-build -c conda-forge --override-channels -y
-              sed -i 's|git_url:.*||' recipes/openfoam13_for_pato/meta.yaml
-              sed -i 's|git_rev:.*|path: /workspace/openfoam13_for_pato_conda|' recipes/openfoam13_for_pato/meta.yaml
-              conda build recipes/openfoam13_for_pato --no-test -c conda-forge --override-channels
+              sed -i 's|git_url:.*||' /workspace/recipes/openfoam13_for_pato/meta.yaml
+              sed -i 's|git_rev:.*|path: /workspace/openfoam13_for_pato_conda|' /workspace/recipes/openfoam13_for_pato/meta.yaml
+              conda build /workspace/recipes/openfoam13_for_pato --no-test -c conda-forge --override-channels
             "
 
       - name: Generate repodata and upload to R2
