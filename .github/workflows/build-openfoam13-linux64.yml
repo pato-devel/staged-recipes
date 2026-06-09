@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout staged-recipes
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           repository: pato-devel/staged-recipes
           ref: openfoam13_for_pato
@@ -25,7 +25,7 @@ jobs:
           git lfs install
 
       - name: Checkout source with LFS
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           repository: pato-devel/openfoam13_for_pato_conda
           ref: 13_20250911
