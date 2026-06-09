@@ -41,6 +41,22 @@ jobs:
         run: |
           conda install conda-build -c conda-forge --override-channels -y
 
+      - name: Patch OpenFOAM source for Linux
+        run: |
+          INT_H="$GITHUB_WORKSPACE/openfoam13_for_pato_conda/OpenFOAM/OpenFOAM-13/src/OpenFOAM/primitives/ints/int/int.H"
+          python3 -c "
+f = open('$INT_H')
+content = f.read()
+f.close()
+old = 'MAXMIN(string::size_type,string::size_type,string::size_type)'
+new = '#ifdef __APPLE__\nMAXMIN(string::size_type,string::size_type,string::size_type)\n#endif'
+content = content.replace(old, new)
+f = open('$INT_H', 'w')
+f.write(content)
+f.close()
+print('Patched int.H: guarded string::size_type MAXMIN with __APPLE__')
+"
+
       - name: Set source path in meta.yaml
         run: |
           cp -r recipes/openfoam13_for_pato /tmp/openfoam13_recipe
