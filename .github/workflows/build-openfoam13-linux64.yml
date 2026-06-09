@@ -67,10 +67,6 @@ jobs:
           printf '%s\n' \
             'if [ "$(uname)" = "Linux" ]; then' \
             '    export ZOLTAN_TYPE=none' \
-            '    export SCOTCH_ARCH_PATH="$PREFIX"' \
-            '    export SCOTCH_INCLUDE_DIR="$PREFIX/include"' \
-            '    export PTSCOTCH_ARCH_PATH="$PREFIX"' \
-            '    export PTSCOTCH_INCLUDE_DIR="$PREFIX/include"' \
             'fi' \
             > /tmp/linux_patch2.sh
           sed -i '/source etc\/bashrc/r /tmp/linux_patch2.sh' /tmp/openfoam13_recipe/build.sh
@@ -80,7 +76,17 @@ jobs:
       - name: Build
         shell: bash -l {0}
         run: |
-          conda-build /tmp/openfoam13_recipe --no-test -c conda-forge --override-channels
+          df -h
+          conda-build /tmp/openfoam13_recipe --no-test -c conda-forge --override-channels 2>&1 | tee /tmp/build_full.log
+          BUILD_EXIT=${PIPESTATUS[0]}
+          df -h
+          if [ $BUILD_EXIT -ne 0 ]; then
+            echo "=== ERROR SUMMARY (grep for error/undefined/killed) ==="
+            grep -n "error:\|Error:\|undefined reference\|cannot find -l\|No space left\|fatal error\|Killed\|signal" /tmp/build_full.log | grep -v "^Binary" | tail -80
+            echo "=== LAST 50 LINES OF BUILD LOG ==="
+            tail -50 /tmp/build_full.log
+            exit $BUILD_EXIT
+          fi
 
       - name: Generate repodata and upload to R2
         shell: bash -l {0}
