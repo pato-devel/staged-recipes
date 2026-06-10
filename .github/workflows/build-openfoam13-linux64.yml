@@ -96,7 +96,7 @@ jobs:
         shell: bash -l {0}
         run: |
           df -h
-          conda-build /tmp/openfoam13_recipe --no-test -c conda-forge --override-channels 2>&1 | tee /tmp/build_full.log
+          conda-build /tmp/openfoam13_recipe --no-test -c conda-forge --override-channels --croot /tmp/conda-bld 2>&1 | tee /tmp/build_full.log
           BUILD_EXIT=${PIPESTATUS[0]}
           df -h
           if [ $BUILD_EXIT -ne 0 ]; then
@@ -115,17 +115,10 @@ jobs:
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
         run: |
           mkdir -p conda-channel/linux-64
-          CONDA_BASE=$(conda info --base)
-          echo "conda base: $CONDA_BASE"
-          ls $CONDA_BASE/conda-bld/linux-64/
-          PKG=$(ls $CONDA_BASE/conda-bld/linux-64/openfoam13_for_pato-*.conda 2>/dev/null | head -1)
+          ls /tmp/conda-bld/linux-64/
+          PKG=$(ls /tmp/conda-bld/linux-64/openfoam13_for_pato-*.conda 2>/dev/null | head -1)
           if [ -z "$PKG" ]; then
-            PKG=$(ls $CONDA_BASE/conda-bld/linux-64/openfoam13_for_pato-*.tar.bz2 2>/dev/null | head -1)
-          fi
-          if [ -z "$PKG" ]; then
-            echo "Package not found! Searching..."
-            find $CONDA_BASE/conda-bld -name "openfoam13_for_pato*" 2>/dev/null
-            exit 1
+            PKG=$(ls /tmp/conda-bld/linux-64/openfoam13_for_pato-*.tar.bz2 2>/dev/null | head -1)
           fi
           echo "Found package: $PKG"
           cp "$PKG" conda-channel/linux-64/
