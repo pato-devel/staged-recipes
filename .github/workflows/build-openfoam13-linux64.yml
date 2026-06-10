@@ -115,7 +115,20 @@ jobs:
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
         run: |
           mkdir -p conda-channel/linux-64
-          cp $(conda info --base)/conda-bld/linux-64/openfoam13_for_pato-*.conda conda-channel/linux-64/
+          CONDA_BASE=$(conda info --base)
+          echo "conda base: $CONDA_BASE"
+          ls $CONDA_BASE/conda-bld/linux-64/
+          PKG=$(ls $CONDA_BASE/conda-bld/linux-64/openfoam13_for_pato-*.conda 2>/dev/null | head -1)
+          if [ -z "$PKG" ]; then
+            PKG=$(ls $CONDA_BASE/conda-bld/linux-64/openfoam13_for_pato-*.tar.bz2 2>/dev/null | head -1)
+          fi
+          if [ -z "$PKG" ]; then
+            echo "Package not found! Searching..."
+            find $CONDA_BASE/conda-bld -name "openfoam13_for_pato*" 2>/dev/null
+            exit 1
+          fi
+          echo "Found package: $PKG"
+          cp "$PKG" conda-channel/linux-64/
           conda index conda-channel
           pip install awscli
           aws s3 sync conda-channel/linux-64 s3://pato-conda-channel/linux-64 \
