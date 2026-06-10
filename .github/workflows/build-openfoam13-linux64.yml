@@ -33,19 +33,16 @@ jobs:
           ref: openfoam13_for_pato
           token: ${{ secrets.PAT_TOKEN }}
 
-      - name: Install git-lfs
+      - name: Download OpenFOAM 13 source from GitHub
         run: |
-          sudo apt-get install -y git-lfs
-          git lfs install
-
-      - name: Checkout source with LFS
-        uses: actions/checkout@v4
-        with:
-          repository: pato-devel/openfoam13_for_pato_conda
-          ref: 13_20250911
-          path: openfoam13_for_pato_conda
-          lfs: true
-          token: ${{ secrets.PAT_TOKEN }}
+          mkdir -p /tmp/of13_clone
+          cd /tmp/of13_clone
+          git clone --depth 1 https://github.com/OpenFOAM/OpenFOAM-13
+          git clone --depth 1 https://github.com/OpenFOAM/ThirdParty-13
+          mkdir -p /tmp/openfoam13_source/src/Linux/OpenFOAM
+          tar cf /tmp/openfoam13_source/src/Linux/OpenFOAM/OpenFOAM-13.tar OpenFOAM-13
+          tar cf /tmp/openfoam13_source/src/Linux/OpenFOAM/ThirdParty-13.tar ThirdParty-13
+          rm -rf /tmp/of13_clone
 
       - name: Setup conda
         uses: conda-incubator/setup-miniconda@v3
@@ -62,7 +59,7 @@ jobs:
       - name: Set source path in meta.yaml
         run: |
           cp -r recipes/openfoam13_for_pato /tmp/openfoam13_recipe
-          python3 -c 'import re,os; m=open("/tmp/openfoam13_recipe/meta.yaml").read(); m=re.sub(r"^\s+url:.*\n","",m,flags=re.M); m=re.sub(r"^\s+sha256:.*\n","  path: "+os.environ["GITHUB_WORKSPACE"]+"/openfoam13_for_pato_conda\n",m,flags=re.M); open("/tmp/openfoam13_recipe/meta.yaml","w").write(m)'
+          python3 -c 'import re,os; m=open("/tmp/openfoam13_recipe/meta.yaml").read(); m=re.sub(r"^\s+url:.*\n","",m,flags=re.M); m=re.sub(r"^\s+sha256:.*\n","  path: /tmp/openfoam13_source\n",m,flags=re.M); open("/tmp/openfoam13_recipe/meta.yaml","w").write(m)'
           echo "--- meta.yaml after patch ---"
           cat /tmp/openfoam13_recipe/meta.yaml
           printf '%s\n' \
