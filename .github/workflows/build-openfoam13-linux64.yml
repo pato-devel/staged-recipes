@@ -107,6 +107,13 @@ jobs:
             exit $BUILD_EXIT
           fi
 
+      - name: Save package as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openfoam13-linux64-package
+          path: /tmp/conda-bld/linux-64/openfoam13_for_pato-*
+          retention-days: 5
+
       - name: Generate repodata and upload to R2
         shell: bash -l {0}
         env:
