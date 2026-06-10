@@ -9,11 +9,21 @@ jobs:
 
     steps:
       - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      - name: Additional disk cleanup
         run: |
-          df -h
-          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
-          sudo rm -rf /usr/local/lib/android /usr/share/swift /usr/local/.ghcup
-          sudo docker image prune --all --force || true
+          sudo rm -rf /usr/share/doc /usr/share/man /usr/share/locale
+          sudo apt-get clean
+          sudo rm -rf /var/lib/apt/lists/*
           df -h
 
       - name: Checkout staged-recipes
@@ -70,8 +80,19 @@ jobs:
             'fi' \
             > /tmp/linux_patch2.sh
           sed -i '/source etc\/bashrc/r /tmp/linux_patch2.sh' /tmp/openfoam13_recipe/build.sh
+          printf '%s\n' \
+            'if [ "$(uname)" = "Linux" ]; then' \
+            '    echo "Cleaning object files before packaging to save disk..."' \
+            '    find "$PREFIX/src/volume_openfoam13_for_pato" -name "*.o" -delete 2>/dev/null || true' \
+            '    find "$PREFIX/src/volume_openfoam13_for_pato" -name "*.dep" -delete 2>/dev/null || true' \
+            '    df -h' \
+            'fi' \
+            > /tmp/linux_patch3.sh
+          sed -i '/^\.\/Allwmake -j/r /tmp/linux_patch3.sh' /tmp/openfoam13_recipe/build.sh
           echo "--- build.sh around bashrc source ---"
           grep -A10 "source etc/bashrc" /tmp/openfoam13_recipe/build.sh
+          echo "--- build.sh around Allwmake ---"
+          grep -A8 "Allwmake" /tmp/openfoam13_recipe/build.sh
 
       - name: Build
         shell: bash -l {0}
