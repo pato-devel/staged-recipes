@@ -46,6 +46,6 @@ jobs:
           echo "Found package: $PKG"
           cp "$PKG" conda-channel/linux-64/
           conda install -n base conda-index awscli -c conda-forge -y
-          python -m conda_index conda-channel
+          conda run -n base python -m conda_index conda-channel
           aws s3 sync conda-channel/linux-64 s3://pato-conda-channel/linux-64 \
             --endpoint-url $R2_ENDPOINT
