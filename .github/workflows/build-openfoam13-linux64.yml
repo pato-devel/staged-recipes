@@ -26,6 +26,15 @@ jobs:
           sudo rm -rf /var/lib/apt/lists/*
           df -h
 
+      - name: Add swap space
+        run: |
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          free -h
+          swapon --show
+
       - name: Checkout staged-recipes
         uses: actions/checkout@v4
         with:
@@ -74,7 +83,7 @@ jobs:
           printf '%s\n' \
             'if [ "$(uname)" = "Linux" ]; then' \
             '    export ZOLTAN_TYPE=none' \
-            '    export WM_NCOMPPROCS=1' \
+            '    export WM_NCOMPPROCS=2' \
             'fi' \
             > /tmp/linux_patch2.sh
           sed -i '/source etc\/bashrc/r /tmp/linux_patch2.sh' /tmp/openfoam13_recipe/build.sh
@@ -94,6 +103,7 @@ jobs:
 
       - name: Build
         shell: bash -l {0}
+        timeout-minutes: 300
         run: |
           df -h
           conda-build /tmp/openfoam13_recipe --no-test -c conda-forge --override-channels --croot /tmp/conda-bld 2>&1 | tee /tmp/build_full.log
